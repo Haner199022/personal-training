@@ -1,0 +1,12 @@
+{
+  "name": "student-mp",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "miniprogram-api-typings": "^3.12.0",
+    "typescript": "^5.5.0"
+  },
+  "dependencies": {
+    "weui-miniprogram": "^1.4.0"
+  }
+}

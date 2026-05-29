@@ -1,0 +1,15 @@
+{
+  "miniprogramRoot": "miniprogram/",
+  "projectname": "personal-training-student",
+  "description": "学员端 · 私教助理",
+  "appid": "TOUCH_ME_REPLACE_WITH_REAL_APPID",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "minified": true,
+    "useCompilerPlugins": ["typescript"]
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.4.0"
+}

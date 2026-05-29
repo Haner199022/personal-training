@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/join/join",
+    "pages/training/training",
+    "pages/checkin-result/checkin-result",
+    "pages/body/body",
+    "pages/coach/coach"
+  ],
+  "window": {
+    "navigationBarTitleText": "私教助理",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f7f7"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#ff6b35",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "训练" },
+      { "pagePath": "pages/body/body", "text": "体脂" },
+      { "pagePath": "pages/coach/coach", "text": "教练" }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

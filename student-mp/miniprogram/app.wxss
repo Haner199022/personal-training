@@ -1,0 +1,9 @@
+/* 学员端全局样式
+ * 设计语言：
+ *   1. 移动端 body 13-14px（不与教练端 web 16px 拉齐）
+ *   2. 主色暖橙 #ff6b35 —— 能量感；数据色独立（青/绿/红）
+ *   注：原机器的 v7 暗色杂志风实现已丢失，此为重建后的临时基线。
+ */
+page { background: #f7f7f7; font-size: 28rpx; color: #1a1a1a; }
+.container { padding: 24rpx; }
+.btn-primary { background: #ff6b35; color: #fff; border-radius: 12rpx; }
