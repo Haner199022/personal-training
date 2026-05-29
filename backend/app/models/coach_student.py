@@ -2,7 +2,7 @@
 v5 的服务台账/健康备忘/标签等字段后续 migration 补）。"""
 from datetime import datetime
 
-from sqlalchemy import BigInteger, DateTime, ForeignKey, String, Text, UniqueConstraint, func
+from sqlalchemy import BigInteger, Integer, DateTime, ForeignKey, String, Text, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -12,7 +12,7 @@ class CoachStudent(Base):
     __tablename__ = "coach_student"
     __table_args__ = (UniqueConstraint("coach_id", "student_id", name="uq_coach_student"),)
 
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger().with_variant(Integer, "sqlite"), primary_key=True)
     coach_id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("coach.id", ondelete="CASCADE"), index=True
     )

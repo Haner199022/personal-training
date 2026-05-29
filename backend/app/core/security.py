@@ -6,7 +6,7 @@ from passlib.context import CryptContext
 
 from app.core.config import get_settings
 
-_pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+_pwd = CryptContext(schemes=["pbkdf2_sha256", "bcrypt"], deprecated="auto")
 
 
 def hash_password(raw: str) -> str:

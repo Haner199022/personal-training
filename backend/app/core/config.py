@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     app_env: str = "dev"
     api_v1_prefix: str = "/api/v1"
 
-    database_url: str = "postgresql+psycopg://app_user:pwd@localhost:5432/personal_training"
+    database_url: str = "sqlite+aiosqlite:///./dev.db"  # dev 默认；生产在 .env 设 postgresql+psycopg://...
     redis_url: str = "redis://localhost:6379/0"
 
     jwt_secret: str = "dev-only-change-me"

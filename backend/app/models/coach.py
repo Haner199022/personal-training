@@ -1,7 +1,7 @@
 """教练账号。对应 vault data-model.md 表 1 `coach`（此处先取 MVP 必需列）。"""
 from datetime import datetime
 
-from sqlalchemy import BigInteger, DateTime, LargeBinary, String, Text, func
+from sqlalchemy import BigInteger, Integer, DateTime, LargeBinary, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -10,7 +10,7 @@ from app.db.base import Base
 class Coach(Base):
     __tablename__ = "coach"
 
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger().with_variant(Integer, "sqlite"), primary_key=True)
     phone: Mapped[str] = mapped_column(String(20), unique=True, index=True)
     password_hash: Mapped[str] = mapped_column(String(255))
     display_name: Mapped[str] = mapped_column(String(64))

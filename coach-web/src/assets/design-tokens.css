@@ -1,0 +1,124 @@
+/* ============================================================
+ * Personal-Training · v7 暗色杂志风 设计令牌（教练端）
+ * 从 2026-05-27 两端一致性体检文档重建（原 v7 实现随代码丢失）。
+ * 设计语言：
+ *   1. 暗色基底 #0a0a0c，杂志式留白 + 衬线 lede + 微缩大写标签
+ *   2. 品牌紫 #A855F7 作唯一强调色（CTA / focus / 强调），配 glow 营造科技感
+ *   3. 数据色独立解耦：青=链接 绿=完成 黄=警告 红=危险
+ * ============================================================ */
+
+:root {
+  /* —— 基底 / 文字 —— */
+  --c-bg:           #0a0a0c;
+  --c-bg-elev:      #141418;   /* 卡片 */
+  --c-bg-elev-2:    #1c1c22;   /* hover / 次级面 */
+  --c-text-base:    #ececf1;
+  --c-text-mute:    #8a8a96;
+  --c-border:       #26262e;
+  --c-border-strong:#3a3a44;
+
+  /* —— 品牌紫 —— */
+  --c-brand:        #A855F7;
+  --c-brand-soft:   rgba(168, 85, 247, 0.16);
+  --c-brand-glow:   rgba(168, 85, 247, 0.55);
+
+  /* —— 数据色 + glow —— */
+  --c-data-green:   #00E676;  --c-data-green-glow:  rgba(0, 230, 118, 0.45);
+  --c-data-yellow:  #FFB800;  --c-data-yellow-glow: rgba(255, 184, 0, 0.45);
+  --c-data-cyan:    #00D4FF;  --c-data-cyan-glow:   rgba(0, 212, 255, 0.45);
+  --c-data-red:     #FF3B3B;  --c-data-red-glow:    rgba(255, 59, 59, 0.45);
+
+  /* —— 字号 —— */
+  --fs-h1: 36px;
+  --fs-h2: 26px;
+  --fs-h3: 19px;
+  --fs-body: 15px;
+  --fs-caption: 13px;
+  --fs-micro: 11px;
+
+  /* —— 字体 —— */
+  --ff-sans: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --ff-serif: "Georgia", "Songti SC", "Noto Serif SC", serif;
+
+  /* —— 阴影 / glow —— */
+  --shadow-cta-strong: 0 0 20px var(--c-brand-glow), 0 0 6px var(--c-brand-glow);
+  --glow-cyan:   0 0 12px var(--c-data-cyan-glow);
+  --glow-green:  0 0 12px var(--c-data-green-glow);
+  --glow-yellow: 0 0 12px var(--c-data-yellow-glow);
+
+  /* —— 渐变 —— */
+  --gradient-brand-glow: radial-gradient(circle at 50% 0%, var(--c-brand-soft) 0%, transparent 520px);
+
+  /* —— 圆角 / 间距 —— */
+  --radius: 12px;
+  --radius-lg: 18px;
+}
+
+/* ============================================================
+ * Utility 体系（对齐学员端，体检 P0-1 要求补齐）
+ * ============================================================ */
+.h1 { font-size: var(--fs-h1); font-weight: 700; letter-spacing: -0.02em; color: var(--c-text-base); }
+.h2 { font-size: var(--fs-h2); font-weight: 700; letter-spacing: -0.015em; color: var(--c-text-base); }
+.h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: -0.01em; color: var(--c-text-base); }
+.body { font-size: var(--fs-body); line-height: 1.55; color: var(--c-text-base); }
+.caption { font-size: var(--fs-caption); color: var(--c-text-mute); }
+.micro {
+  font-size: var(--fs-micro); letter-spacing: 0.32em; color: var(--c-text-mute);
+  text-transform: uppercase; font-weight: 600;
+}
+.lede {
+  font-family: var(--ff-serif); font-size: 22px; line-height: 1.55;
+  letter-spacing: 0.02em; color: var(--c-text-base);
+}
+.quote-attr { font-size: var(--fs-caption); color: var(--c-text-mute); letter-spacing: 0.04em; margin-top: 16px; }
+.divider { height: 1px; background: var(--c-border); }
+.divider-strong { height: 1px; background: var(--c-border-strong); }
+
+.card {
+  background: var(--c-bg-elev); border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg); padding: 24px;
+}
+
+/* ============================================================
+ * 全局基底
+ * ============================================================ */
+html, body, #app { height: 100%; margin: 0; }
+body {
+  background: var(--c-bg); color: var(--c-text-base);
+  font-family: var(--ff-sans); font-size: var(--fs-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+ * Element Plus 暗色覆写（品牌紫为 primary）
+ * 注：必须用 html.dark 选择器，否则被 dark/css-vars.css 的 html.dark 默认值盖掉
+ * ============================================================ */
+html.dark {
+  --el-color-primary: #A855F7;
+  --el-color-primary-light-3: #bd7ff9;
+  --el-color-primary-light-5: #cda0fb;
+  --el-color-primary-light-7: #ddc0fc;
+  --el-color-primary-light-8: #e6d3fd;
+  --el-color-primary-light-9: #efe5fe;
+  --el-color-primary-dark-2: #8a3fd6;
+  --el-color-success: #00E676;
+  --el-color-warning: #FFB800;
+  --el-color-danger: #FF3B3B;
+  --el-color-info: #00D4FF;
+
+  --el-bg-color: #141418;
+  --el-bg-color-overlay: #1c1c22;
+  --el-bg-color-page: #0a0a0c;
+  --el-text-color-primary: #ececf1;
+  --el-text-color-regular: #c4c4cd;
+  --el-text-color-secondary: #8a8a96;
+  --el-border-color: #26262e;
+  --el-border-color-light: #26262e;
+  --el-border-color-lighter: #1c1c22;
+  --el-fill-color-blank: #141418;
+  --el-fill-color-light: #1c1c22;
+}
+
+/* CTA 按钮加 glow */
+.el-button--primary { box-shadow: var(--shadow-cta-strong); }
+.el-button--primary:hover { box-shadow: 0 0 28px var(--c-brand-glow), 0 0 8px var(--c-brand-glow); }

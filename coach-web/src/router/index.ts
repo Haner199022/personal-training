@@ -10,4 +10,12 @@ const router = createRouter({
     { path: "/check-in/:id", name: "checkin", component: () => import("@/views/CheckInDetailView.vue") },
   ],
 })
+
+// 简单守卫：未登录一律回 /login
+router.beforeEach((to) => {
+  const authed = !!localStorage.getItem("pt_token")
+  if (!authed && to.name !== "login") return { name: "login" }
+  if (authed && to.name === "login") return { name: "dashboard" }
+})
+
 export default router

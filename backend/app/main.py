@@ -1,15 +1,29 @@
 """FastAPI 应用入口。所有业务路由挂在 /api/v1 下。"""
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1 import api_router
 from app.core.config import get_settings
+from app.db.base import Base
+from app.db.session import engine
+import app.models  # noqa: F401  注册所有表到 Base.metadata
 
 settings = get_settings()
 
-app = FastAPI(title="Personal-Training API", version="0.1.0")
 
-# 教练端 Web 走 COS/CDN 跨域访问 API；MVP 先放开，上线收紧白名单。
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # dev 便捷：sqlite 自动建表。生产走 alembic，不在此 create_all。
+    if settings.database_url.startswith("sqlite"):
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+    yield
+
+
+app = FastAPI(title="Personal-Training API", version="0.1.0", lifespan=lifespan)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

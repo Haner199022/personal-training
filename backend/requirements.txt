@@ -2,6 +2,7 @@
 fastapi[standard]==0.115.*
 uvicorn[standard]==0.32.*
 sqlalchemy==2.0.*
+greenlet==3.*            # SQLAlchemy async 依赖（部分平台不自动装）
 alembic==1.13.*
 psycopg[binary,pool]==3.2.*
 pydantic-settings==2.*
@@ -16,3 +17,4 @@ cryptography==43.*
 # --- dev ---
 pytest==8.*
 pytest-asyncio==0.24.*
+aiosqlite==0.20.*        # dev-only：本机无 docker/PG 时用 SQLite 跑通；生产仍走 psycopg/PG
