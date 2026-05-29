@@ -42,3 +42,7 @@ npm-debug.log*
 data/
 *.db
 *.sqlite
+
+# tsc emit artifacts (vite.config.ts type-checked, never emitted)
+coach-web/vite.config.js
+coach-web/vite.config.d.ts
