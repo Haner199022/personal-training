@@ -8,7 +8,7 @@
 
 ## 跨机器铁律（这次踩过坑）
 
-- 本仓库**只在本机本地**，靠 git remote 跨机器同步。**第一次有产出就 push 到私有远程**。
+- 本仓库**只在本机本地**，靠 git remote 跨机器同步。**第一次有产出就 push 到远程**（`https://github.com/Haner199022/personal-training`，2026-06-12 起为**公开**仓库——提交前自查：不进凭证、不进学员真实数据）。
 - 远程地址记到 vault `_shared/deployment.md`，换机器先 `git clone`。
 - iCloud 不同步代码（ADR-0004/0009）—— 别指望 vault 帮你带代码。
 
