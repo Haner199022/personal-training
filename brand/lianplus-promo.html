@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>练+ COACH+ — 品牌概念发布 | 不只是记录，是专业提升</title>
+<meta name="description" content="练+ / COACH+ 品牌概念宣传页：一个加号的四重含义——加法、升级、正向、专业。给教练加一个 +。">
+<meta property="og:title" content="练+ COACH+ · 品牌概念发布">
+<meta property="og:description" content="不只是记录，是专业提升。一个 +，四重含义。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305060a'/%3E%3Cpath d='M32 16v32M16 32h32' stroke='%23d4ff50' stroke-width='9' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+/* ============================================================
+   练+ / COACH+ · 品牌概念宣传页
+   2026 fashion-grade brand reveal · 单文件零依赖
+   深空黑舞台 · volt 微光只属于「+」与 CTA · chrome 扫光
+   颗粒质感 · 电影化分镜 · prefers-reduced-motion 全量降级
+   ============================================================ */
+
+/* ---------- Tokens ---------- */
+:root {
+  color-scheme: dark;
+  --ink: #05060a;            /* 深空黑（非纯黑，带蓝紫倾向） */
+  --ink-2: #0a0c12;
+  --paper: #f4f1ea;          /* 骨白（2026 暖调中性） */
+  --text: #f5f5f7;           /* Apple 同款 off-white */
+  --muted: rgba(245, 245, 247, .55);
+  --volt: #d4ff50;           /* 被驯化的霓虹：只授予 + 与 CTA */
+  --volt-rgb: 212, 255, 80;
+  --volt-on-light: #5c750e;  /* 浅底版 volt：白底 4.5:1 达标 */
+  --line: rgba(255, 255, 255, .1);
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --sans: "PingFang SC", "SF Pro Display", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, system-ui, sans-serif;
+  --serif: "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); background: var(--ink); color: var(--text);
+  line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+section { position: relative; padding: clamp(5rem, 10vw, 9rem) 1.5rem; }
+.wrap { max-width: 1100px; margin: 0 auto; }
+.center { text-align: center; }
+h1, h2, h3 { line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; }
+h2 { font-size: clamp(2rem, 5.5vw, 3.6rem); font-weight: 800; }
+p { text-wrap: pretty; }
+::selection { background: var(--volt); color: var(--ink); }
+:focus-visible { outline: 2px solid var(--volt); outline-offset: 3px; border-radius: 4px; }
+.editorial :focus-visible { outline-color: #0a0a0c; } /* 浅底段焦点环换深色，保证可见 */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip-link { position: absolute; left: -999px; top: 0; z-index: 999; background: var(--volt); color: var(--ink); padding: .6rem 1rem; font-weight: 700; }
+.skip-link:focus { left: 8px; top: 8px; }
+
+/* 衬线斜体 · 时装编辑感反差 */
+.ed { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: 0; }
+
+/* mono 规格行（电影 credits 语法） */
+.credits {
+  font-family: var(--mono); font-size: .68rem; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* 节标编号 */
+.sec-no { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.6rem; }
+.sec-no::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* ---------- 全页颗粒（人类制造的可信度） ---------- */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: .055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ---------- 顶部条 ---------- */
+header.bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem; border-bottom: 1px solid transparent;
+  transition: border-color .4s, background .4s;
+}
+header.bar.scrolled { border-color: var(--line); background: rgba(5, 6, 10, .7); }
+@supports (backdrop-filter: blur(1px)) {
+  header.bar.scrolled { background: rgba(5, 6, 10, .5); backdrop-filter: blur(20px) saturate(1.5); }
+}
+.bar-logo { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.05rem; }
+.bar-logo .plus { color: var(--volt); font-weight: 900; }
+.bar-tag {
+  font-family: var(--mono); font-size: .62rem; letter-spacing: .2em; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: .3rem .8rem; text-transform: uppercase;
+}
+
+/* ---------- Hero · Logo 自绘揭幕 ---------- */
+.hero {
+  min-height: 100svh; display: grid; place-items: center; text-align: center;
+  overflow: clip; padding-top: 5rem;
+}
+.glow-stage { position: absolute; inset: 0; z-index: -1; }
+.glow-stage i {
+  position: absolute; border-radius: 50%; filter: blur(110px);
+  animation: drift 50s ease-in-out infinite alternate;
+}
+.glow-stage i:nth-child(1) { width: 56vw; aspect-ratio: 1; left: 50%; top: 38%; translate: -50% -50%; background: rgba(var(--volt-rgb), .12); }
+.glow-stage i:nth-child(2) { width: 38vw; aspect-ratio: 1; left: 12%; bottom: -14%; background: rgba(88, 60, 255, .14); animation-delay: -25s; }
+@keyframes drift { to { transform: translate(4vw, -3vh) scale(1.12); } }
+
+.logo-draw { width: clamp(120px, 18vw, 190px); margin: 0 auto 2.2rem; display: block; }
+.logo-draw line {
+  stroke: var(--volt); stroke-width: 14; stroke-linecap: round;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  animation: draw 1.1s var(--ease) forwards;
+}
+.logo-draw line.h { animation-delay: .9s; }
+.logo-draw line.v { animation-delay: .25s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.logo-draw { filter: drop-shadow(0 0 18px rgba(var(--volt-rgb), .45)); animation: breathe 4.5s ease-in-out 2.4s infinite; }
+@keyframes breathe {
+  0%, 100% { filter: drop-shadow(0 0 14px rgba(var(--volt-rgb), .35)); }
+  50% { filter: drop-shadow(0 0 34px rgba(var(--volt-rgb), .6)); }
+}
+
+.hero h1 {
+  font-size: clamp(3.4rem, 13vw, 10rem); font-weight: 900; letter-spacing: -.04em;
+  line-height: .95; text-transform: uppercase;
+}
+.hero h1 .plus { color: var(--volt); text-shadow: 0 0 12px rgba(var(--volt-rgb), .5), 0 0 48px rgba(var(--volt-rgb), .3); }
+/* chrome 液态金属扫光（Y3K 终极中性色） */
+.chrome {
+  background: linear-gradient(105deg, #fff 0%, #c8ccd4 28%, #6b7280 46%, #eef1f6 53%, #9aa1ad 70%, #fff 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: sheen 5.5s var(--ease) 1.6s infinite;
+}
+@keyframes sheen { 0% { background-position: 120% 0; } 55%, 100% { background-position: -120% 0; } }
+
+.hero .slogan { margin-top: 1.6rem; font-size: clamp(1.05rem, 2.4vw, 1.5rem); color: var(--muted); }
+.hero .slogan b { color: var(--text); font-weight: 600; }
+.hero .reveal-up { opacity: 0; translate: 0 24px; animation: up 1s var(--ease) forwards; }
+.hero h1.reveal-up { animation-delay: 1.5s; }
+.hero .slogan.reveal-up { animation-delay: 1.9s; }
+.hero .credits.reveal-up { animation-delay: 2.3s; margin-top: 3rem; }
+@keyframes up { to { opacity: 1; translate: 0 0; } }
+.scroll-cue {
+  position: absolute; bottom: 2rem; left: 50%; translate: -50%;
+  width: 1px; height: 56px; background: linear-gradient(var(--volt), transparent);
+  animation: cue 2s var(--ease) infinite;
+}
+@keyframes cue { 0% { transform: scaleY(0); transform-origin: top; } 60% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+/* ---------- 跑马灯（动态识别） ---------- */
+.marquee {
+  border-block: 1px solid var(--line); padding: .9rem 0; overflow: hidden;
+  display: flex; user-select: none; -webkit-user-select: none;
+}
+.marquee .track {
+  display: flex; gap: 3rem; flex: none; align-items: baseline;
+  animation: marq 26s linear infinite; padding-right: 3rem;
+}
+.marquee:hover .track { animation-play-state: paused; }
+@keyframes marq { to { transform: translateX(-100%); } }
+.marquee span { font-size: 1rem; font-weight: 700; letter-spacing: .12em; white-space: nowrap; text-transform: uppercase; }
+.marquee .plus { color: var(--volt); }
+.marquee .ed { font-size: 1.05rem; text-transform: none; letter-spacing: 0; color: var(--muted); }
+
+/* ---------- Sticky 舞台 · 一个+四重含义 ---------- */
+.meaning-wrap { height: 440vh; position: relative; }
+.meaning-stage {
+  position: sticky; top: 0; height: 100svh; height: 100dvh; overflow: clip;
+  display: grid; place-items: center;
+}
+.big-plus {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  font-size: clamp(16rem, 52vw, 38rem); font-weight: 900; line-height: 1;
+  color: var(--volt); opacity: .14; z-index: 0;
+  text-shadow: 0 0 80px rgba(var(--volt-rgb), .35);
+  transform: rotate(calc(var(--p, 0) * 90deg)) scale(calc(.85 + var(--p, 0) * .3));
+  pointer-events: none;
+}
+.meaning-panels { position: relative; z-index: 1; text-align: center; width: min(760px, 92vw); height: min(62vh, 480px); }
+.panel {
+  position: absolute; inset: 0; display: grid; place-content: center; gap: 1rem;
+  opacity: 0; translate: 0 30px; transition: opacity .5s var(--ease), translate .5s var(--ease);
+  pointer-events: none; padding: 0 1rem;
+}
+.panel.on { opacity: 1; translate: 0 0; }
+.panel .credits { color: var(--volt); }
+.panel h3 { font-size: clamp(2rem, 6vw, 3.8rem); font-weight: 900; }
+.panel p { color: var(--muted); font-size: clamp(.98rem, 2vw, 1.15rem); max-width: 560px; margin: 0 auto; }
+.panel h3 .plus { color: var(--volt); }
+.meaning-progress {
+  position: absolute; bottom: 2.2rem; left: 50%; translate: -50%;
+  display: flex; gap: .55rem; z-index: 2;
+}
+.meaning-progress i { width: 26px; height: 2px; background: var(--line); transition: background .3s; }
+.meaning-progress i.on { background: var(--volt); }
+/* reduced-motion / 兜底：平铺静态卡片 */
+.meaning-static { display: none; }
+
+/* ---------- 探索长廊（草稿 → 终选） ---------- */
+.journey { background: var(--ink-2); border-block: 1px solid var(--line); }
+.gallery {
+  display: flex; gap: 1.2rem; overflow-x: auto; padding: 1rem .5rem 1.6rem;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: rgba(var(--volt-rgb), .4) transparent;
+}
+.g-card {
+  flex: 0 0 min(380px, 84vw); scroll-snap-align: center;
+  border: 1px solid var(--line); border-radius: 1.4rem; padding: 2rem 1.8rem;
+  background: rgba(255, 255, 255, .02); position: relative; overflow: hidden;
+  filter: grayscale(1); opacity: .55;
+  transition: filter .8s var(--ease), opacity .8s var(--ease), border-color .4s;
+}
+.g-card.lit { filter: grayscale(0); opacity: 1; }
+.g-card .credits { margin-bottom: 1.2rem; display: block; }
+.g-card h3 { font-size: 1.5rem; margin-bottom: .5rem; }
+.g-card .gp { font-size: .9rem; color: var(--muted); min-height: 4.6em; }
+.g-card .viz { height: 130px; margin: 1.4rem 0 1rem; display: grid; place-items: center; }
+.g-card ul { margin-top: 1rem; }
+.g-card li { font-size: .82rem; color: var(--muted); padding: .25rem 0; display: flex; gap: .5rem; }
+.g-card li::before { content: "—"; content: "—" / ""; color: var(--volt); }
+.g-card.final { border-color: rgba(var(--volt-rgb), .5); background: rgba(var(--volt-rgb), .05); box-shadow: 0 0 70px rgba(var(--volt-rgb), .08); }
+.g-card .verdict {
+  position: absolute; top: 1.3rem; right: 1.3rem; font-family: var(--mono); font-size: .6rem;
+  letter-spacing: .18em; padding: .28rem .7rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
+}
+.g-card.final .verdict { border-color: var(--volt); color: var(--volt); }
+/* 岛 viz */
+.isle-viz { width: 120px; height: 100px; }
+.isle-viz .sea { stroke: #5b9dd9; stroke-width: 2.5; fill: none; stroke-linecap: round; }
+.isle-viz .land { fill: #d98a5b; }
+/* 家 viz */
+.home-viz { width: 110px; height: 100px; }
+.home-viz path { stroke: #e8734a; stroke-width: 7; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+/* + viz */
+.plus-viz { font-size: 5.2rem; font-weight: 900; color: var(--volt); line-height: 1; text-shadow: 0 0 28px rgba(var(--volt-rgb), .5); }
+.g-hint { text-align: center; font-size: .78rem; color: var(--muted); margin-top: .4rem; }
+
+/* ---------- 公式区 ---------- */
+.formula { text-align: center; overflow: clip; }
+.eq { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: clamp(.6rem, 2.5vw, 1.6rem); margin-top: 3rem; }
+.eq .term {
+  font-size: clamp(1.5rem, 4.5vw, 3rem); font-weight: 800; letter-spacing: -.02em;
+  padding: .5em .8em; border: 1px solid var(--line); border-radius: 1rem; background: rgba(255,255,255,.02);
+}
+.eq .op { font-size: clamp(1.8rem, 5vw, 3.4rem); font-weight: 900; color: var(--volt); text-shadow: 0 0 16px rgba(var(--volt-rgb), .45); }
+.eq .result {
+  border-color: rgba(var(--volt-rgb), .55); color: var(--volt);
+  box-shadow: 0 0 50px rgba(var(--volt-rgb), .12);
+}
+.swap-list { margin-top: 4rem; display: grid; gap: .9rem; max-width: 520px; margin-inline: auto; }
+.swap {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  border-bottom: 1px solid var(--line); padding: .9rem .2rem; font-size: clamp(1rem, 2.4vw, 1.25rem);
+}
+.swap .old { color: var(--muted); position: relative; }
+.swap .old::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 54%; height: 2px;
+  background: var(--volt); transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .7s var(--ease) calc(var(--i, 0) * 180ms);
+}
+.swap.in .old::after { transform: scaleX(1); }
+.swap .arr { color: var(--volt); font-weight: 900; }
+.swap .new { font-weight: 800; }
+.swap .new .plus { color: var(--volt); }
+
+/* ---------- 骨白编辑段（字体样张 + 色彩 Token） ---------- */
+.editorial { background: var(--paper); color: #111317; }
+.editorial .credits { color: rgba(17, 19, 23, .64); }
+.editorial h2 { color: #0a0a0c; }
+.editorial .sec-no::after { background: rgba(17, 19, 23, .14); }
+.specimen {
+  border: 1px solid rgba(17, 19, 23, .16); border-radius: 1.4rem; padding: 2.4rem 2rem;
+  background: #fff; margin-top: 1rem;
+}
+.type-stage {
+  min-height: 170px; display: grid; align-items: center;
+  font-weight: var(--w, 800); font-size: calc(var(--s, 56) * 1px);
+  line-height: 1.15; letter-spacing: -.02em; outline: none; overflow-wrap: anywhere;
+}
+.type-stage:focus-visible { outline: 2px dashed rgba(17, 19, 23, .3); outline-offset: 8px; }
+.type-stage .plus { color: var(--volt-on-light); }
+.spec-controls { display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 1.8rem; padding-top: 1.6rem; border-top: 1px solid rgba(17, 19, 23, .1); }
+.spec-controls label { display: grid; gap: .4rem; font-family: var(--mono); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(17,19,23,.64); }
+.spec-controls output { color: #0a0a0c; font-weight: 700; }
+input[type="range"] { width: 200px; accent-color: var(--volt-on-light); }
+.spec-hint { font-size: .78rem; color: rgba(17, 19, 23, .62); margin-top: 1rem; }
+/* 英文名候选 chips */
+.name-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.6rem; }
+.name-chip {
+  font-family: var(--sans); font-weight: 800; font-size: .95rem; letter-spacing: .02em;
+  border: 1.5px solid rgba(17, 19, 23, .22); border-radius: 999px; padding: .55rem 1.2rem;
+  cursor: pointer; background: none; transition: all .25s var(--ease); color: #111317;
+}
+.name-chip small { font-weight: 500; opacity: .55; margin-left: .4rem; }
+.name-chip:hover { translate: 0 -2px; }
+.name-chip[aria-pressed="true"] { background: #0a0a0c; color: var(--volt); border-color: #0a0a0c; }
+
+/* 色彩 Token 墙 */
+.tokens { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin-top: 2.6rem; }
+.token {
+  border-radius: 1.1rem; overflow: hidden; border: 1px solid rgba(17, 19, 23, .14);
+  background: #fff; cursor: pointer; text-align: left; font-family: inherit; padding: 0;
+  transition: translate .25s var(--ease), box-shadow .25s var(--ease);
+}
+.token:hover { translate: 0 -3px; box-shadow: 0 14px 34px rgba(17, 19, 23, .12); }
+.token .swatch { height: 86px; position: relative; }
+.token .meta { padding: .8rem 1rem 1rem; font-size: .8rem; }
+.token .meta b { display: block; font-size: .88rem; }
+.token .meta code { font-family: var(--mono); font-size: .72rem; color: rgba(17, 19, 23, .64); }
+.token .use { display: block; font-size: .7rem; color: rgba(17, 19, 23, .62); margin-top: .25rem; }
+.token .copied {
+  position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; font-size: .85rem;
+  background: rgba(10, 10, 12, .82); color: var(--volt); opacity: 0; transition: opacity .25s;
+}
+.token.ok .copied { opacity: 1; }
+
+/* ---------- Logo 变体矩阵 ---------- */
+.variants { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; margin-top: 2.6rem; }
+.v-card {
+  aspect-ratio: 4 / 3; border-radius: 1.2rem; border: 1px solid var(--line);
+  display: grid; place-items: center; position: relative; overflow: hidden;
+  font-weight: 900; transition: border-color .3s;
+}
+.v-card:hover { border-color: rgba(var(--volt-rgb), .4); }
+.v-card .lab {
+  position: absolute; bottom: .8rem; left: 1rem; font-family: var(--mono); font-size: .6rem;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 400;
+}
+.v-card .mark { font-size: 2.1rem; letter-spacing: -.02em; }
+.v-dark { background: var(--ink-2); } .v-dark .plus { color: var(--volt); }
+.v-light { background: var(--paper); color: #0a0a0c; } .v-light .lab { color: rgba(17,19,23,.64); } .v-light .plus { color: var(--volt-on-light); }
+.v-mono { background: var(--ink-2); color: #9aa1ad; }
+.v-symbol { background: var(--ink-2); } .v-symbol .mark { font-size: 3.4rem; color: var(--volt); text-shadow: 0 0 22px rgba(var(--volt-rgb), .4); }
+.v-lock { background: var(--ink-2); display: grid; place-content: center; text-align: center; gap: .2rem; }
+.v-lock .en { font-family: var(--mono); font-size: .72rem; letter-spacing: .34em; color: var(--muted); font-weight: 500; }
+.v-safe { background: var(--ink-2); }
+.v-safe .mark { outline: 1px dashed rgba(255, 255, 255, .3); outline-offset: 18px; }
+/* 误用红线 */
+.dont { position: relative; }
+.dont::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(45deg, transparent 47.5%, rgba(255, 70, 70, .85) 47.5%, rgba(255, 70, 70, .85) 52.5%, transparent 52.5%);
+}
+.dont .x {
+  position: absolute; top: .7rem; right: .9rem; color: #ff5d5d; font-weight: 900; font-size: 1.1rem;
+}
+.dont-stretch .mark { transform: scaleX(1.7); }
+.dont-color .plus { color: #ff63d8 !important; }
+.dont-shadow .mark { text-shadow: 4px 5px 0 #5b9dd9, 0 0 18px rgba(91, 157, 217, .8); }
+
+/* ---------- 终极 CTA ---------- */
+.final-cta { text-align: center; min-height: 90svh; display: grid; place-content: center; overflow: clip; }
+.final-cta h2 { font-size: clamp(2.4rem, 7vw, 5rem); font-weight: 900; }
+.final-cta h2 .plus { color: var(--volt); text-shadow: 0 0 18px rgba(var(--volt-rgb), .5); }
+.final-cta p { color: var(--muted); margin: 1.4rem auto 2.6rem; max-width: 520px; }
+.btn {
+  display: inline-flex; align-items: center; gap: .6em; padding: 1rem 2.4rem;
+  border-radius: 999px; font-weight: 800; font-size: 1.05rem; cursor: pointer;
+  background: var(--volt); color: var(--ink); border: 0;
+  box-shadow: 0 0 0 1px rgba(var(--volt-rgb), .6), 0 0 30px rgba(var(--volt-rgb), .25);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+  will-change: transform;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(var(--volt-rgb), .8), 0 0 56px rgba(var(--volt-rgb), .4); }
+.btn:active { transform: scale(.97); }
+.cta-note { font-size: .8rem; color: var(--muted); margin-top: 1rem; }
+
+/* ---------- Footer · 片尾字幕 ---------- */
+footer { border-top: 1px solid var(--line); padding: 3.5rem 1.5rem 4.5rem; text-align: center; }
+footer .credits { line-height: 2.4; }
+footer .credits b { color: var(--text); font-weight: 600; }
+footer .plus-hint { margin-top: 1.8rem; font-size: .72rem; color: var(--muted); }
+footer .plus-hint kbd {
+  font-family: var(--mono); border: 1px solid var(--line); border-radius: 5px; padding: .1em .45em; font-size: .9em;
+}
+
+/* ---------- 通用 reveal ---------- */
+.reveal { opacity: 0; translate: 0 28px; transition: opacity .8s var(--ease), translate .8s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
+.reveal.in { opacity: 1; translate: 0 0; }
+
+/* ---------- 粒子画布（吸取教训：显式尺寸，HiDPI 安全） ---------- */
+#fx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 90; pointer-events: none; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); left: 50%; translate: -50% 16px; z-index: 95;
+  background: #14171f; border: 1px solid var(--line); color: var(--text);
+  padding: .75rem 1.3rem; border-radius: 999px; font-size: .9rem; max-width: 90vw; text-align: center;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .5); opacity: 0; transition: opacity .3s, translate .35s var(--ease);
+  pointer-events: none;
+}
+.toast.show { opacity: 1; translate: -50% 0; }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 480px) {
+  .bar-tag { display: none; }
+}
+@media (max-width: 640px) {
+  .eq { flex-direction: column; }
+  .eq .term, .eq .result { width: 100%; max-width: 320px; }
+  .spec-controls { gap: 1.2rem; }
+  input[type="range"] { width: 150px; }
+  .big-plus { font-size: 70vw; }
+}
+
+/* ---------- 动效降级：reduce 而非 remove ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  .reveal, .hero .reveal-up { opacity: 1 !important; translate: 0 0 !important; }
+  .logo-draw line { stroke-dashoffset: 0 !important; }
+  .g-card { filter: none; opacity: 1; }
+  .swap .old::after { transform: scaleX(1); }
+  /* sticky 含义舞台 → 静态平铺 */
+  .meaning-wrap { height: auto; }
+  .meaning-stage { display: none; }
+  .meaning-static { display: grid; gap: 1.2rem; padding: clamp(4rem, 8vw, 7rem) 1.5rem; max-width: 760px; margin: 0 auto; }
+  .meaning-static .panel-s {
+    border: 1px solid var(--line); border-radius: 1.2rem; padding: 1.8rem;
+  }
+  .meaning-static h3 { font-size: 1.5rem; margin: .3rem 0 .5rem; }
+  .meaning-static h3 .plus { color: var(--volt); }
+  .meaning-static p { color: var(--muted); font-size: .95rem; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<header class="bar" id="bar">
+  <div class="bar-logo">练<span class="plus">+</span> <span class="credits" style="margin-left:.4rem">COACH+</span></div>
+  <span class="bar-tag">Brand Concept · 方向 03 提案</span>
+</header>
+
+<main id="main">
+
+<!-- ============ Hero · Logo 自绘揭幕 ============ -->
+<section class="hero" aria-label="练+ 品牌揭幕">
+  <div class="glow-stage" aria-hidden="true"><i></i><i></i></div>
+  <div>
+    <svg class="logo-draw" viewBox="0 0 100 100" aria-hidden="true">
+      <line class="v" x1="50" y1="8" x2="50" y2="92" pathLength="100"/>
+      <line class="h" x1="8" y1="50" x2="92" y2="50" pathLength="100"/>
+    </svg>
+    <h1 class="reveal-up">练<span class="plus" id="heroPlus">+</span><br><span class="chrome">COACH+</span></h1>
+    <p class="slogan reveal-up"><b>不只是记录，是专业提升。</b><br><span class="ed">—— 给教练，加一个加号</span></p>
+    <p class="credits reveal-up">Brand Reveal · Personal-Training Project · MMXXVI</p>
+  </div>
+  <span class="scroll-cue" aria-hidden="true"></span>
+</section>
+
+<!-- ============ 跑马灯 ============ -->
+<p class="sr-only">练+ · COACH+ · FIT+ · TRAIN+ —— 不只是记录，是专业提升；专业的课，专业的工具；每个教练都值得一个 +；PRO 级教练，PRO 级工具。</p>
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>练<i class="plus">+</i></span><span class="ed">不只是记录，是专业提升</span>
+    <span>COACH<i class="plus">+</i></span><span>专业的课 · 专业的工具</span>
+    <span>FIT<i class="plus">+</i></span><span class="ed">每个教练都值得一个 +</span>
+    <span>TRAIN<i class="plus">+</i></span><span>PRO 级教练 · PRO 级工具</span>
+    <span>练<i class="plus">+</i></span><span class="ed">不只是记录，是专业提升</span>
+    <span>COACH<i class="plus">+</i></span><span>专业的课 · 专业的工具</span>
+    <span>FIT<i class="plus">+</i></span><span class="ed">每个教练都值得一个 +</span>
+    <span>TRAIN<i class="plus">+</i></span><span>PRO 级教练 · PRO 级工具</span>
+  </div>
+  <div class="track">
+    <span>练<i class="plus">+</i></span><span class="ed">不只是记录，是专业提升</span>
+    <span>COACH<i class="plus">+</i></span><span>专业的课 · 专业的工具</span>
+    <span>FIT<i class="plus">+</i></span><span class="ed">每个教练都值得一个 +</span>
+    <span>TRAIN<i class="plus">+</i></span><span>PRO 级教练 · PRO 级工具</span>
+    <span>练<i class="plus">+</i></span><span class="ed">不只是记录，是专业提升</span>
+    <span>COACH<i class="plus">+</i></span><span>专业的课 · 专业的工具</span>
+    <span>FIT<i class="plus">+</i></span><span class="ed">每个教练都值得一个 +</span>
+    <span>TRAIN<i class="plus">+</i></span><span>PRO 级教练 · PRO 级工具</span>
+  </div>
+</div>
+
+<!-- ============ Sticky 舞台 · 一个+四重含义 ============ -->
+<div class="meaning-wrap" id="meaningWrap" role="region" aria-label="加号的四重含义">
+  <h2 class="sr-only">Chapter 01 · 一个 +，四重含义</h2>
+  <div class="meaning-stage" id="meaningStage">
+    <p class="credits" style="position:absolute;top:5.2rem;left:50%;translate:-50%;white-space:nowrap">Chapter 01 · 一个 + 四重含义</p>
+    <span class="big-plus" id="bigPlus" aria-hidden="true">+</span>
+    <div class="meaning-panels">
+      <div class="panel" data-step="0">
+        <span class="credits">01 / 加法 · Addition</span>
+        <h3>训练记录 <span class="plus">+</span> AI 分析 <span class="plus">+</span> 数据可视化</h3>
+        <p>教练 + 工具 = 更强的教练。每一项能力，都是往你身上做加法。</p>
+      </div>
+      <div class="panel" data-step="1">
+        <span class="credits">02 / 升级 · Upgrade</span>
+        <h3>比现有工具，高一个维度</h3>
+        <p>微信群记录 → 练+。Excel 表格 → 练+。普通 App → 练+。差的不只是一个加号。</p>
+      </div>
+      <div class="panel" data-step="2">
+        <span class="credits">03 / 正号 · Positive</span>
+        <h3>训练是正向的事</h3>
+        <p>数据正向增长，学员正向进步。把「+1」变成每天的仪式感。</p>
+      </div>
+      <div class="panel" data-step="3">
+        <span class="credits">04 / 专业 · Professional</span>
+        <h3>「+」是健康领域的天然语言</h3>
+        <p>专业、可信赖、科学——一个符号，替你说完所有自我介绍。</p>
+      </div>
+    </div>
+    <div class="meaning-progress" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <!-- reduced-motion 静态版 -->
+  <div class="meaning-static">
+    <p class="credits">Chapter 01 · 一个 + · 四重含义</p>
+    <div class="panel-s"><span class="credits">01 / 加法</span><h3>训练记录 <span class="plus">+</span> AI <span class="plus">+</span> 数据</h3><p>教练 + 工具 = 更强的教练。</p></div>
+    <div class="panel-s"><span class="credits">02 / 升级</span><h3>比现有工具，高一个维度</h3><p>微信群 → 练+，Excel → 练+，普通 App → 练+。</p></div>
+    <div class="panel-s"><span class="credits">03 / 正号</span><h3>训练是正向的事</h3><p>数据正向增长，学员正向进步。</p></div>
+    <div class="panel-s"><span class="credits">04 / 专业</span><h3>「+」是健康领域的天然语言</h3><p>专业、可信赖、科学。</p></div>
+  </div>
+</div>
+
+<!-- ============ 探索长廊 ============ -->
+<section class="journey" aria-label="品牌探索之旅">
+  <div class="wrap">
+    <div class="sec-no reveal"><span class="credits">Chapter 02 · 探索之旅</span></div>
+    <h2 class="reveal">一个名字的诞生，<br>经过了一座岛和一个家</h2>
+    <p class="reveal" style="color:var(--muted);max-width:560px;margin-top:1rem" >品牌脑爆走过三个方向。前两个都很好——但只有「+」，可以被写进每一天的训练里。</p>
+  </div>
+  <div class="gallery" style="margin-top:2.6rem" tabindex="0" role="region" aria-label="三个品牌方向横向画廊，可左右滚动">
+    <article class="g-card" >
+      <span class="verdict">Direction 01</span>
+      <span class="credits">教练岛 · CoachIsle</span>
+      <h3>每个教练，都有一座岛</h3>
+      <div class="viz">
+        <svg class="isle-viz" viewBox="0 0 120 100" aria-hidden="true">
+          <ellipse class="land" cx="60" cy="55" rx="32" ry="14"/>
+          <path class="land" d="M52 55 L60 30 L68 55 Z"/>
+          <path class="sea" d="M10 78 q10 -7 20 0 t20 0 t20 0 t20 0 t20 0"/>
+          <path class="sea" d="M18 89 q10 -7 20 0 t20 0 t20 0 t20 0"/>
+        </svg>
+      </div>
+      <p class="gp">在健身房的汪洋大海中，教练是一座座独立的岛——学员档案在岛上，训练数据在岛上，走到哪里，岛跟到哪里。</p>
+      <ul>
+        <li>自由感强，哲学完整</li>
+        <li>但「岛」也意味着孤立、疏离</li>
+        <li>离日常训练语言有点远</li>
+      </ul>
+    </article>
+    <article class="g-card">
+      <span class="verdict">Direction 02</span>
+      <span class="credits">练家 · CoachBase</span>
+      <h3>练家子，用练家</h3>
+      <div class="viz">
+        <svg class="home-viz" viewBox="0 0 110 100" aria-hidden="true">
+          <path d="M18 52 L55 20 L92 52"/>
+          <path d="M30 52 V84 H80 V52"/>
+          <path d="M44 84 V66 H66 V84"/>
+        </svg>
+      </div>
+      <p class="gp">家园、专家、家人——三层含义都温暖。这是教练的根据地，离开任何健身房，这里永远是你的。</p>
+      <ul>
+        <li>「练家子」谐音巧妙</li>
+        <li>情感浓度高、记忆点好</li>
+        <li>但「家」字偏温，专业锐度不足</li>
+      </ul>
+    </article>
+    <article class="g-card final">
+      <span class="verdict">★ Direction 03 · 提案首选</span>
+      <span class="credits">练+ · COACH+</span>
+      <h3>给教练，加一个 +</h3>
+      <div class="viz"><span class="plus-viz" aria-hidden="true">+</span></div>
+      <p class="gp">一个符号四重含义；写进每一组训练（+1）、每一次进步（+2.5kg）、每一个学员（+1 人）。品牌即动作，动作即品牌。</p>
+      <ul>
+        <li>Apple Pro / Disney+ 级高级感</li>
+        <li>「+」醒目大胆，天生是 Logo</li>
+        <li>中英无缝：练+ / COACH+ / FIT+</li>
+      </ul>
+    </article>
+  </div>
+  <p class="g-hint" aria-hidden="true">← 横向滑动查看 →</p>
+</section>
+
+<!-- ============ 公式区 ============ -->
+<section class="formula" aria-label="品牌公式">
+  <div class="wrap">
+    <div class="sec-no reveal" style="justify-content:center"><span class="credits">Chapter 03 · 品牌公式</span></div>
+    <h2 class="reveal">教练，值得一个更好的等式</h2>
+    <div class="eq">
+      <span class="term reveal" style="--i:0">教练</span>
+      <span class="op reveal" style="--i:1">+</span>
+      <span class="term reveal" style="--i:2">AI</span>
+      <span class="op reveal" style="--i:3">+</span>
+      <span class="term reveal" style="--i:4">数据</span>
+      <span class="op reveal" style="--i:5">=</span>
+      <span class="term result reveal" style="--i:6">练+</span>
+    </div>
+    <div class="swap-list" aria-label="升级对照">
+      <div class="swap reveal" style="--i:0"><span class="old">微信群里翻打卡</span><span class="arr" aria-hidden="true">→</span><span class="new">练<span class="plus">+</span></span></div>
+      <div class="swap reveal" style="--i:1"><span class="old">Excel 表格记数据</span><span class="arr" aria-hidden="true">→</span><span class="new">练<span class="plus">+</span></span></div>
+      <div class="swap reveal" style="--i:2"><span class="old">普通健身 App</span><span class="arr" aria-hidden="true">→</span><span class="new">练<span class="plus">+</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 骨白编辑段 · 字体样张 ============ -->
+<section class="editorial" aria-label="字体系统">
+  <div class="wrap">
+    <div class="sec-no reveal"><span class="credits">Chapter 04 · 字体即力量</span></div>
+    <h2 class="reveal">粗体几何无衬线，<br>「+」永远最醒目</h2>
+    <div class="specimen reveal">
+      <p class="credits" style="margin-bottom:1rem">Interactive Type Specimen · 点击文字可直接编辑</p>
+      <div class="type-stage" id="typeStage" contenteditable="true" spellcheck="false" role="textbox" aria-label="字体试打区，可编辑">练<span class="plus">+</span> 让每一次训练都加分</div>
+      <div class="spec-controls">
+        <label>字重 Weight
+          <input type="range" id="wRange" min="300" max="900" step="10" value="800">
+          <output id="wOut">800</output>
+        </label>
+        <label>字号 Size
+          <input type="range" id="sRange" min="24" max="96" step="1" value="56">
+          <output id="sOut">56px</output>
+        </label>
+      </div>
+      <p class="spec-hint">规范：标题 800-900 · 正文 400-500 · 「+」一律 900 并使用品牌 volt 色</p>
+    </div>
+    <div class="specimen reveal" style="margin-top:1.2rem">
+      <p class="credits" style="margin-bottom:.4rem">English Wordmark Candidates · 点击切换试打</p>
+      <div class="name-row" role="group" aria-label="英文名候选">
+        <button class="name-chip" aria-pressed="true" data-name="COACH+" aria-label="COACH+（教练+），推荐度 5/5">COACH+<small aria-hidden="true">教练+ ★★★★★</small></button>
+        <button class="name-chip" aria-pressed="false" data-name="FIT+" aria-label="FIT+（健身+），推荐度 5/5">FIT+<small aria-hidden="true">健身+ ★★★★★</small></button>
+        <button class="name-chip" aria-pressed="false" data-name="TRAIN+" aria-label="TRAIN+（训练+），推荐度 4/5">TRAIN+<small aria-hidden="true">训练+ ★★★★</small></button>
+        <button class="name-chip" aria-pressed="false" data-name="REP+" aria-label="REP+（次数+），推荐度 4/5">REP+<small aria-hidden="true">次数+ ★★★★</small></button>
+        <button class="name-chip" aria-pressed="false" data-name="LIFT+" aria-label="LIFT+（举铁+），推荐度 4/5">LIFT+<small aria-hidden="true">举铁+ ★★★★</small></button>
+      </div>
+      <div class="type-stage" id="nameStage" style="--s:64" aria-live="polite">COACH<span class="plus">+</span></div>
+    </div>
+
+    <!-- 色彩 Token 墙 -->
+    <div class="sec-no reveal" style="margin-top:5rem"><span class="credits">Chapter 05 · 色彩 Token（点击复制）</span></div>
+    <h2 class="reveal">白与黑负责信息，<br>volt 只属于「+」</h2>
+    <div class="tokens">
+      <button class="token reveal" style="--i:0" data-hex="#05060a">
+        <span class="swatch" style="background:#05060a"><span class="copied" aria-hidden="true">已复制 ✓</span></span>
+        <span class="meta"><b>深空黑 Ink</b><code>#05060A</code><span class="use">主背景 · 舞台</span></span>
+      </button>
+      <button class="token reveal" style="--i:1" data-hex="#d4ff50">
+        <span class="swatch" style="background:#d4ff50"><span class="copied" aria-hidden="true">已复制 ✓</span></span>
+        <span class="meta"><b>Volt 荧光</b><code>#D4FF50</code><span class="use">仅限「+」与 CTA</span></span>
+      </button>
+      <button class="token reveal" style="--i:2" data-hex="#f4f1ea">
+        <span class="swatch" style="background:#f4f1ea;border-bottom:1px solid rgba(17,19,23,.08)"><span class="copied" aria-hidden="true">已复制 ✓</span></span>
+        <span class="meta"><b>骨白 Bone</b><code>#F4F1EA</code><span class="use">编辑段落背景</span></span>
+      </button>
+      <button class="token reveal" style="--i:3" data-hex="#f5f5f7">
+        <span class="swatch" style="background:#f5f5f7;border-bottom:1px solid rgba(17,19,23,.08)"><span class="copied" aria-hidden="true">已复制 ✓</span></span>
+        <span class="meta"><b>云白 Text</b><code>#F5F5F7</code><span class="use">深底正文</span></span>
+      </button>
+      <button class="token reveal" style="--i:4" data-hex="#9aa1ad">
+        <span class="swatch" style="background:linear-gradient(105deg,#fff,#c8ccd4 30%,#6b7280 50%,#eef1f6 60%,#9aa1ad)"><span class="copied" aria-hidden="true">已复制 ✓</span></span>
+        <span class="meta"><b>铬银 Chrome</b><code>#9AA1AD</code><span class="use">金属扫光 · 辅助渐变</span></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Logo 变体矩阵 ============ -->
+<section aria-label="Logo 变体与使用规范">
+  <div class="wrap">
+    <div class="sec-no reveal"><span class="credits">Chapter 06 · 标识系统</span></div>
+    <h2 class="reveal">一个符号，<br>所有场合</h2>
+    <div class="variants">
+      <div class="v-card v-dark reveal" style="--i:0"><span class="mark">练<span class="plus">+</span></span><span class="lab">主标 · 深底</span></div>
+      <div class="v-card v-light reveal" style="--i:1"><span class="mark">练<span class="plus">+</span></span><span class="lab">反白 · 浅底</span></div>
+      <div class="v-card v-mono reveal" style="--i:2"><span class="mark">练+</span><span class="lab">单色 · 灰阶场合</span></div>
+      <div class="v-card v-symbol reveal" style="--i:3"><span class="mark">+</span><span class="lab">纯符号 · App 图标</span></div>
+      <div class="v-card v-lock reveal" style="--i:4"><span class="mark">练<span class="plus" style="color:var(--volt)">+</span></span><span class="en">COACH PLUS</span><span class="lab">中英锁定版式</span></div>
+      <div class="v-card v-safe reveal" style="--i:5"><span class="mark">练<span class="plus" style="color:var(--volt)">+</span></span><span class="lab">安全区 = 一个「+」高</span></div>
+      <div class="v-card v-dark dont dont-stretch reveal" style="--i:6"><span class="mark">练<span class="plus" style="color:var(--volt)">+</span></span><span class="x" aria-hidden="true">✗</span><span class="lab">禁止拉伸变形</span></div>
+      <div class="v-card v-dark dont dont-color reveal" style="--i:7"><span class="mark">练<span class="plus">+</span></span><span class="x" aria-hidden="true">✗</span><span class="lab">禁止更换「+」颜色</span></div>
+      <div class="v-card v-dark dont dont-shadow reveal" style="--i:8"><span class="mark" style="color:var(--text)">练+</span><span class="x" aria-hidden="true">✗</span><span class="lab">禁止添加投影特效</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 终极 CTA ============ -->
+<section class="final-cta" aria-label="行动召唤">
+  <div class="glow-stage" aria-hidden="true"><i></i><i></i></div>
+  <div class="wrap">
+    <h2 class="reveal">普通记录 vs 练<span class="plus">+</span>，<br>差的不只是一个加号</h2>
+    <p class="reveal">品牌方向 03 概念提案 · 基于 2026-06 品牌脑爆 · 与「教练岛」「练家」并行评估中</p>
+    <button class="btn reveal" id="ctaBtn" type="button">把这个方向定下来 <span aria-hidden="true">+1</span></button>
+    <p class="cta-note reveal">点击即投票——你的每一次点击，都是给「练+」的 +1</p>
+  </div>
+</section>
+</main>
+
+<!-- ============ Footer · 片尾字幕 ============ -->
+<footer>
+  <p class="credits">
+    A <b>Personal-Training</b> Brand Picture<br>
+    Direction <b>03 · 练+ / COACH+</b> · Starring <b>The Plus Sign</b><br>
+    Concept <b>品牌脑爆 2026-06-12</b> · Built with <b>2026 Fashion Trends</b><br>
+    黑底白字 volt 点睛 · 颗粒为证 · MMXXVI
+  </p>
+  <p class="plus-hint">彩蛋：在任何位置按 <kbd>+</kbd> 键，给页面做一次加法</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   练+ Brand Promo · 交互层（零依赖）
+   sticky 含义舞台 / reveal / 画廊点亮 / 样张 / token 复制 / +粒子
+   ============================================================ */
+(() => {
+"use strict";
+const RMQ = matchMedia("(prefers-reduced-motion: reduce)");
+let RM = RMQ.matches;
+RMQ.addEventListener?.("change", (e) => { RM = e.matches; if (!RM) updStage(); });
+const $ = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+
+/* ---------- 顶栏滚动态 ---------- */
+const bar = $("#bar");
+let barTick = false;
+addEventListener("scroll", () => {
+  if (barTick) return; barTick = true;
+  requestAnimationFrame(() => { bar.classList.toggle("scrolled", scrollY > 40); barTick = false; });
+}, { passive: true });
+
+/* ---------- 通用 reveal ---------- */
+const io = new IntersectionObserver((es) => {
+  es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+}, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+$$(".reveal, .swap").forEach((el) => io.observe(el));
+
+/* ---------- 画廊卡片点亮（灰度 → 全彩） ---------- */
+const gio = new IntersectionObserver((es) => {
+  es.forEach((e) => e.target.classList.toggle("lit", e.isIntersecting && e.intersectionRatio > .6));
+}, { threshold: [0, .6, 1] });
+$$(".g-card").forEach((el) => gio.observe(el));
+
+/* ---------- Sticky 含义舞台：滚动进度 → 面板切换 ---------- */
+const wrap = $("#meaningWrap"), stage = $("#meaningStage"), bigPlus = $("#bigPlus");
+const panels = $$(".panel", stage), dots = $$(".meaning-progress i", stage);
+let stageTick = false;
+const updStage = () => {
+  const r = wrap.getBoundingClientRect();
+  const total = r.height - innerHeight;
+  const p = Math.min(Math.max(-r.top / (total || 1), 0), 1);
+  bigPlus.style.setProperty("--p", p);
+  const step = Math.min(Math.floor(p * panels.length), panels.length - 1);
+  panels.forEach((el, i) => el.classList.toggle("on", i === step));
+  dots.forEach((el, i) => el.classList.toggle("on", i <= step));
+};
+addEventListener("scroll", () => {
+  if (RM || stageTick) return; stageTick = true;
+  requestAnimationFrame(() => { updStage(); stageTick = false; });
+}, { passive: true });
+if (!RM) updStage();
+
+/* ---------- 字体样张 ---------- */
+const typeStage = $("#typeStage"), wRange = $("#wRange"), sRange = $("#sRange");
+const wOut = $("#wOut"), sOut = $("#sOut");
+wRange.addEventListener("input", () => { typeStage.style.setProperty("--w", wRange.value); wOut.textContent = wRange.value; });
+sRange.addEventListener("input", () => { typeStage.style.setProperty("--s", sRange.value); sOut.textContent = sRange.value + "px"; });
+typeStage.addEventListener("keydown", (e) => { if (e.key === "Enter") e.preventDefault(); }); // 单行样张，保持语义诚实
+
+/* 英文名候选切换 */
+const nameStage = $("#nameStage");
+$$(".name-chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    $$(".name-chip").forEach((c) => c.setAttribute("aria-pressed", "false"));
+    chip.setAttribute("aria-pressed", "true");
+    const name = chip.dataset.name;
+    nameStage.innerHTML = name.replace("+", '<span class="plus">+</span>');
+  });
+});
+
+/* ---------- 色彩 Token 点击复制 ---------- */
+const toastEl = $("#toast");
+let toastT;
+const toast = (msg, ms = 2200) => {
+  toastEl.textContent = msg; toastEl.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove("show"), ms);
+};
+$$(".token").forEach((t) => {
+  t.addEventListener("click", async () => {
+    const hex = t.dataset.hex.toUpperCase();
+    try {
+      await navigator.clipboard.writeText(hex);
+      t.classList.add("ok");
+      toast(`已复制 ${hex}`); // 同步播报给读屏用户（role=status）
+      setTimeout(() => t.classList.remove("ok"), 1400);
+    } catch {
+      toast(`复制失败，请手动记录 ${hex}`);
+    }
+  });
+});
+
+/* ---------- 粒子系统（HiDPI 安全：CSS 已设 100% 尺寸） ---------- */
+const canvas = $("#fx"), ctx = canvas.getContext("2d");
+let ps = [], fxOn = false;
+const fit = () => { canvas.width = innerWidth * devicePixelRatio; canvas.height = innerHeight * devicePixelRatio; ctx.scale(devicePixelRatio, devicePixelRatio); };
+fit(); addEventListener("resize", fit);
+const burst = (x, y, n = 26) => {
+  if (RM) return;
+  for (let i = 0; i < n && ps.length < 240; i++) {
+    ps.push({
+      x, y, vx: (Math.random() - .5) * 7, vy: Math.random() * -7 - 2,
+      g: .22, life: 1, decay: .01 + Math.random() * .015,
+      size: 13 + Math.random() * 16, rot: Math.random() * 90 - 45, vr: (Math.random() - .5) * 8,
+    });
+  }
+  if (!fxOn) { fxOn = true; requestAnimationFrame(loop); }
+};
+function loop() {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  ps = ps.filter((p) => p.life > 0);
+  for (const p of ps) {
+    p.x += p.vx; p.y += p.vy; p.vy += p.g; p.rot += p.vr; p.life -= p.decay;
+    ctx.save();
+    ctx.globalAlpha = Math.max(p.life, 0);
+    ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
+    /* 粒子就是品牌符号「+」 */
+    ctx.strokeStyle = "#d4ff50"; ctx.lineWidth = p.size * .26; ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(0, -p.size / 2); ctx.lineTo(0, p.size / 2);
+    ctx.moveTo(-p.size / 2, 0); ctx.lineTo(p.size / 2, 0);
+    ctx.stroke();
+    ctx.restore();
+  }
+  if (ps.length) requestAnimationFrame(loop);
+  else { fxOn = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+}
+
+/* ---------- 彩蛋 1 · 按「+」键做加法 ---------- */
+let plusCount = 0;
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "+" && e.key !== "=") return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return; // 不劫持浏览器缩放快捷键 Cmd/Ctrl +
+  if (e.target.closest?.("[contenteditable], input, textarea")) return; // 样张输入不劫持
+  plusCount++;
+  burst(innerWidth / 2 + (Math.random() - .5) * innerWidth * .4, innerHeight * .4, 22);
+  if (plusCount === 5) toast("+5！你已经很懂这个品牌了 💪");
+  if (plusCount === 10) toast("+10 · 解锁隐藏结论：就选「练+」吧");
+});
+
+/* ---------- 彩蛋 2 · Hero 大「+」连点 ---------- */
+const heroPlus = $("#heroPlus");
+let hp = 0, hpT;
+heroPlus.addEventListener("click", () => {
+  clearTimeout(hpT);
+  const r = heroPlus.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2, 16);
+  if (++hp >= 6) { hp = 0; toast("连续 +6！这就是「正向反馈」的含义 ⚡"); }
+  hpT = setTimeout(() => (hp = 0), 1500);
+});
+heroPlus.style.cursor = "pointer";
+
+/* ---------- CTA 投票 ---------- */
+const store = {
+  get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
+};
+const ctaBtn = $("#ctaBtn");
+let votes = +(store.get("lp_votes") || 0);
+ctaBtn.addEventListener("click", () => {
+  votes++; store.set("lp_votes", votes);
+  const r = ctaBtn.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top, 40);
+  toast(votes === 1 ? "已记下你的 +1 · 提案票数 +1" : `练+ 票数：+${votes}`);
+});
+
+/* ---------- 控制台彩蛋 ---------- */
+console.log(
+  "%c练+%c COACH+ · 你打开了控制台——这也是一种加练 💪 按 + 键试试",
+  "background:#d4ff50;color:#05060a;font-weight:900;padding:4px 12px;border-radius:6px;font-size:16px",
+  "color:#d4ff50;font-size:12px;padding-left:8px"
+);
+})();
+</script>
+</body>
+</html>
