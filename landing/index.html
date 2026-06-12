@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>练程 LiànChéng — 自由教练的远程私教助理 | 陪学员，练到成</title>
+<meta name="description" content="练程：为自由私人教练打造的学员服务系统。训练计划、打卡点评、体脂趋势、课时台账一站管齐——用 1 个人的精力，带出 20 个学员的服务。免费档 3 学员，Pro ¥99/月。">
+<meta property="og:title" content="练程 — 陪学员，练到成">
+<meta property="og:description" content="自由教练的远程私教助理：训练计划、打卡点评、体脂趋势、课时台账，一站管齐。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c8ff1f'/%3E%3Ctext x='32' y='44' font-size='34' font-weight='bold' text-anchor='middle' fill='%230a0c10' font-family='PingFang SC,sans-serif'%3E练%3C/text%3E%3C/svg%3E">
+<style>
+/* ============================================================
+   练程 Landing Page · 2026 设计趋势实践
+   dark-first · OKLCH · bento grid · scroll-driven · glass 2.0
+   单文件零依赖 · 渐进增强 · prefers-reduced-motion 全量降级
+   ============================================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  color-scheme: dark;
+  --bg: #0a0c10;
+  --bg-2: #0e1117;
+  --surface: #13161d;
+  --surface-2: #191d26;
+  --line: rgba(255, 255, 255, .08);
+  --text: #eef1f6;
+  --muted: rgba(238, 241, 246, .58);
+  --accent: #c8ff1f;
+  --accent-rgb: 200, 255, 31;
+  --accent-dim: rgba(var(--accent-rgb), .14);
+  --accent-glow: rgba(var(--accent-rgb), .35);
+  --danger: #ff5d5d;
+  --wechat: #95ec69;
+  --radius: 1.25rem;
+  --dur: .22s;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", -apple-system, system-ui, sans-serif;
+}
+@supports (color: oklch(0% 0 0)) {
+  :root {
+    --accent: oklch(92% .23 122);
+    --accent-dim: oklch(92% .23 122 / .14);
+    --accent-glow: oklch(92% .23 122 / .35);
+  }
+}
+/* 彩蛋 · 肌肉模式：能量橙主题 */
+body.muscle {
+  --accent: #ff9d2e;
+  --accent-rgb: 255, 157, 46;
+  --accent-dim: rgba(255, 157, 46, .16);
+  --accent-glow: rgba(255, 157, 46, .4);
+}
+@supports (color: oklch(0% 0 0)) {
+  body.muscle {
+    --accent: oklch(78% .17 60);
+    --accent-dim: oklch(78% .17 60 / .16);
+    --accent-glow: oklch(78% .17 60 / .4);
+  }
+}
+body.muscle h1, body.muscle h2 { font-weight: 900; }
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+section { position: relative; padding: clamp(4.5rem, 9vw, 8rem) 1.5rem; scroll-margin-top: 76px; }
+.wrap { max-width: 1120px; margin: 0 auto; }
+.center { text-align: center; }
+
+h1, h2, h3 { line-height: 1.18; letter-spacing: -.01em; text-wrap: balance; transition: font-weight .3s; }
+h2 { font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 800; }
+p { text-wrap: pretty; }
+.kicker {
+  display: inline-flex; align-items: center; gap: .5em;
+  font-size: .82rem; font-weight: 600; letter-spacing: .14em;
+  color: var(--accent); text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+.kicker::before { content: ""; width: 22px; height: 2px; background: var(--accent); border-radius: 2px; }
+.section-sub { color: var(--muted); max-width: 620px; margin: .9rem auto 0; font-size: 1.02rem; }
+
+::selection { background: var(--accent); color: #0a0c10; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.skip-link {
+  position: absolute; left: -999px; top: 0; z-index: 999;
+  background: var(--accent); color: #0a0c10; padding: .6rem 1rem; font-weight: 700;
+}
+.skip-link:focus { left: 8px; top: 8px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- 滚动进度条（CSS scroll-driven，JS 兜底） ---------- */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 90;
+  background: linear-gradient(90deg, var(--accent), #7be3ff);
+  transform-origin: 0 50%; transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .progress { animation: grow linear both; animation-timeline: scroll(root); }
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+
+/* ---------- 导航（玻璃拟态 2.0） ---------- */
+header.nav {
+  position: fixed; top: 3px; left: 0; right: 0; z-index: 80;
+  background: rgba(10, 12, 16, .68);
+  border-bottom: 1px solid var(--line);
+}
+@supports (backdrop-filter: blur(1px)) {
+  header.nav { background: rgba(10, 12, 16, .55); backdrop-filter: blur(16px) saturate(1.4); }
+}
+.nav-inner {
+  max-width: 1120px; margin: 0 auto; padding: .8rem 1.5rem;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.logo {
+  display: flex; align-items: center; gap: .55rem; font-weight: 800; font-size: 1.15rem;
+  cursor: pointer; user-select: none; -webkit-user-select: none;
+}
+.logo-mark {
+  width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: #0a0c10;
+  display: grid; place-items: center; font-size: 1.05rem; font-weight: 800;
+  transition: transform var(--dur) var(--ease), background var(--dur);
+}
+.logo:hover .logo-mark { transform: rotate(-8deg) scale(1.06); }
+.logo .pinyin { font-size: .68rem; font-weight: 500; color: var(--muted); letter-spacing: .08em; }
+nav.menu { margin-left: auto; display: flex; gap: 1.6rem; font-size: .92rem; }
+nav.menu a { color: var(--muted); transition: color var(--dur); position: relative; }
+nav.menu a:hover { color: var(--text); }
+nav.menu a::after {
+  content: ""; position: absolute; left: 0; bottom: -4px; height: 2px; width: 100%;
+  background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform var(--dur) var(--ease);
+}
+nav.menu a:hover::after { transform: scaleX(1); }
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+  padding: .85rem 1.7rem; border-radius: 999px; font-weight: 700; font-size: 1rem;
+  border: 1px solid transparent; cursor: pointer; position: relative;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur);
+  will-change: transform;
+}
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--accent); color: #0a0c10; box-shadow: 0 4px 24px var(--accent-glow); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 36px var(--accent-glow); }
+.btn-ghost { border-color: var(--line); color: var(--text); background: rgba(255, 255, 255, .03); }
+.btn-ghost:hover { border-color: rgba(255, 255, 255, .25); transform: translateY(-2px); }
+.btn-sm { padding: .55rem 1.15rem; font-size: .88rem; }
+.cta-note { font-size: .8rem; color: var(--muted); margin-top: .65rem; }
+
+/* 长按 CTA 充能环（彩蛋 · 等长收缩测试） */
+.hold-ring {
+  position: absolute; inset: -7px; border-radius: 999px; pointer-events: none;
+  background: conic-gradient(var(--accent) calc(var(--p, 0) * 1%), transparent 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+  opacity: 0; transition: opacity .2s;
+}
+.btn.holding .hold-ring { opacity: 1; }
+#mainCta { touch-action: manipulation; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 100svh; display: grid; align-items: center;
+  padding-top: clamp(7rem, 12vw, 9rem); overflow: clip;
+}
+/* 极光背景 + 颗粒噪点（2026 grainy aurora） */
+.aurora { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.aurora i {
+  position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55;
+  animation: drift 22s var(--ease) infinite alternate;
+}
+.aurora i:nth-child(1) { width: 620px; height: 460px; left: -8%; top: -12%; background: rgba(var(--accent-rgb), .16); }
+.aurora i:nth-child(2) { width: 540px; height: 480px; right: -10%; top: 6%; background: rgba(60, 130, 255, .14); animation-delay: -7s; }
+.aurora i:nth-child(3) { width: 480px; height: 420px; left: 28%; bottom: -26%; background: rgba(160, 70, 255, .1); animation-delay: -14s; }
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(60px, 40px) scale(1.15); }
+}
+.grain {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+.hero-grid {
+  max-width: 1120px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1.08fr .92fr; gap: 3rem; align-items: center;
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: .6em;
+  border: 1px solid var(--line); border-radius: 999px; padding: .42rem 1rem;
+  font-size: .82rem; color: var(--muted); background: rgba(255, 255, 255, .03);
+  margin-bottom: 1.4rem;
+}
+.eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: blink 2.4s infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+.eyebrow .en { font-family: ui-monospace, "SF Mono", monospace; letter-spacing: .12em; font-size: .76rem; }
+
+h1.headline {
+  font-size: clamp(2.6rem, 6.4vw, 4.6rem); font-weight: 900; margin-bottom: 1.3rem;
+}
+h1 .grad {
+  background: linear-gradient(92deg, var(--accent) 10%, #7be3ff 90%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+/* 逐字入场 */
+h1 .ch { display: inline-block; opacity: 0; transform: translateY(.55em); animation: chUp .55s var(--ease) forwards; animation-delay: calc(var(--i) * 45ms + .15s); }
+@keyframes chUp { to { opacity: 1; transform: none; } }
+.hero-sub { color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.16rem); max-width: 540px; margin-bottom: 2rem; }
+.hero-sub strong { color: var(--text); font-weight: 600; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: .9rem; align-items: center; }
+
+.trust { display: flex; gap: 2.2rem; margin-top: 2.4rem; flex-wrap: wrap; }
+.trust div { font-size: .85rem; color: var(--muted); }
+.trust b { display: block; font-size: 1.5rem; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.trust b em { font-style: normal; color: var(--accent); }
+
+/* ---------- 手机样机（纯 CSS 学员端小程序界面） ---------- */
+.stage { position: relative; display: grid; place-items: center; perspective: 1200px; }
+.phone {
+  width: min(310px, 78vw); border-radius: 42px; border: 7px solid #1c2027;
+  background: linear-gradient(180deg, #11141a, #0d1015);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .06), 0 0 80px rgba(var(--accent-rgb), .07);
+  padding: 1rem .95rem 1.2rem; position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .25s var(--ease);
+}
+.phone .notch { width: 86px; height: 20px; border-radius: 12px; background: #1c2027; margin: 0 auto .8rem; }
+.mp-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .8rem; }
+.mp-head b { font-size: 1.02rem; }
+.mp-head span { font-size: .7rem; color: var(--muted); }
+.mp-bar { height: 7px; border-radius: 99px; background: rgba(255, 255, 255, .08); overflow: hidden; margin-bottom: 1rem; }
+.mp-bar i { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--accent), #7be3ff); animation: fillbar 1.6s var(--ease) 1.2s forwards; }
+@keyframes fillbar { to { width: 50%; } }
+.mp-item {
+  display: flex; align-items: center; gap: .65rem; padding: .62rem .7rem;
+  border: 1px solid var(--line); border-radius: 13px; margin-bottom: .55rem;
+  background: rgba(255, 255, 255, .025); font-size: .8rem;
+}
+.mp-item .nm { font-weight: 600; }
+.mp-item .dt { color: var(--muted); font-size: .68rem; }
+.mp-check {
+  width: 21px; height: 21px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, .25);
+  display: grid; place-items: center; font-size: .62rem; color: #0a0c10; flex: none;
+}
+.mp-item.done .mp-check { background: var(--accent); border-color: var(--accent); }
+.mp-item.done .mp-check::after { content: "✓"; font-weight: 800; }
+.mp-item.done { animation: pop .45s var(--ease) both; }
+.mp-item.done:nth-child(4) { animation-delay: 1.5s; }
+.mp-item.done:nth-child(5) { animation-delay: 2.1s; }
+@keyframes pop { 0% { background: rgba(255,255,255,.025); } 45% { background: var(--accent-dim); transform: scale(1.025); } 100% { background: rgba(255,255,255,.025); } }
+.mp-coach {
+  margin: .7rem 0 .9rem; padding: .6rem .7rem; border-radius: 13px; border-top-left-radius: 4px;
+  background: var(--accent-dim); border: 1px solid rgba(var(--accent-rgb), .22);
+  font-size: .74rem; line-height: 1.55;
+}
+.mp-coach b { color: var(--accent); }
+.mp-btn {
+  display: block; width: 100%; text-align: center; padding: .72rem; border-radius: 999px;
+  background: var(--accent); color: #0a0c10; font-weight: 800; font-size: .9rem; border: 0; cursor: pointer;
+  animation: pulse 2.6s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  55% { box-shadow: 0 0 0 14px rgba(var(--accent-rgb), 0); }
+}
+/* 漂浮玻璃卡片 */
+.float-card {
+  position: absolute; border-radius: 15px; border: 1px solid rgba(255, 255, 255, .14);
+  background: rgba(22, 26, 34, .82); padding: .7rem .9rem; font-size: .74rem;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
+  animation: hover-float 6s ease-in-out infinite;
+}
+@supports (backdrop-filter: blur(1px)) {
+  .float-card { background: rgba(22, 26, 34, .55); backdrop-filter: blur(14px) saturate(1.3); }
+}
+.float-card.fc1 { top: 10%; left: -7%; animation-delay: -2s; }
+.float-card.fc2 { bottom: 13%; right: -9%; }
+.float-card b { font-size: .95rem; }
+.float-card .up { color: var(--accent); font-weight: 700; }
+@keyframes hover-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+.spark { width: 110px; height: 34px; margin-top: .3rem; }
+.spark polyline { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+
+/* ---------- 通用 reveal（IO + CSS scroll-driven 渐进增强） ---------- */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s var(--ease), transform .65s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ---------- 痛点对比区 ---------- */
+.pain { background: var(--bg-2); }
+.vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 3rem; }
+.vs-card { border-radius: var(--radius); padding: 2rem 1.8rem; border: 1px solid; }
+.vs-card h3 { font-size: 1.12rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: .6rem; }
+.vs-card li { display: flex; gap: .7rem; padding: .55rem 0; font-size: .94rem; color: var(--muted); align-items: flex-start; }
+.vs-card li::before { flex: none; width: 21px; height: 21px; border-radius: 50%; display: grid; place-items: center; font-size: .68rem; font-weight: 800; margin-top: .2em; }
+.vs-bad { border-color: rgba(255, 93, 93, .25); background: rgba(255, 93, 93, .045); }
+.vs-bad li::before { content: "✕"; content: "✕" / ""; background: rgba(255, 93, 93, .15); color: var(--danger); }
+.vs-good { border-color: rgba(var(--accent-rgb), .3); background: var(--accent-dim); box-shadow: 0 0 70px rgba(var(--accent-rgb), .06); }
+.vs-good li { color: var(--text); }
+.vs-good li::before { content: "✓"; content: "✓" / ""; background: var(--accent); color: #0a0c10; }
+.vs-tag { font-size: .72rem; font-weight: 700; padding: .2rem .7rem; border-radius: 99px; }
+.vs-bad .vs-tag { background: rgba(255, 93, 93, .15); color: var(--danger); }
+.vs-good .vs-tag { background: var(--accent); color: #0a0c10; }
+
+/* ---------- Bento 功能区 ---------- */
+.bento {
+  display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(152px, auto); gap: 1.1rem; margin-top: 3rem;
+}
+.bento-card {
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+  padding: 1.5rem; overflow: hidden; position: relative;
+  transform-style: preserve-3d;
+  transition: transform .25s var(--ease), border-color .25s, box-shadow .25s;
+}
+.bento-card:hover { border-color: rgba(var(--accent-rgb), .35); box-shadow: 0 18px 50px rgba(0, 0, 0, .35); }
+.bento-card h3 { font-size: 1.08rem; margin-bottom: .45rem; }
+.bento-card > p { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+.bento-card .icon { font-size: 1.35rem; margin-bottom: .7rem; display: inline-block; }
+.b-lg { grid-column: span 2; grid-row: span 2; }
+.b-md { grid-column: span 2; }
+.b-sm { grid-column: span 1; grid-row: span 2; }
+
+/* 卡内 mini UI：周计划 */
+.mini-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: .35rem; margin-top: 1.1rem; }
+.mini-week span {
+  font-size: .62rem; text-align: center; padding: .5rem 0 .4rem; border-radius: 8px;
+  border: 1px solid var(--line); color: var(--muted); background: rgba(255, 255, 255, .02);
+}
+.mini-week span.on { background: var(--accent-dim); border-color: rgba(var(--accent-rgb), .35); color: var(--text); }
+.mini-week b { display: block; font-size: .78rem; color: var(--accent); }
+.chip {
+  display: inline-block; font-size: .7rem; padding: .25rem .65rem; border-radius: 99px;
+  background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(var(--accent-rgb), .25);
+  margin-top: .9rem; margin-right: .4rem;
+}
+/* 卡内 mini UI：打卡 feed */
+.mini-feed { margin-top: 1rem; display: grid; gap: .55rem; }
+.mini-feed div {
+  display: flex; gap: .6rem; align-items: center; font-size: .76rem;
+  border: 1px solid var(--line); padding: .55rem .7rem; border-radius: 11px; background: rgba(255, 255, 255, .02);
+}
+.ava {
+  flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent);
+  color: #0a0c10; display: grid; place-items: center; font-weight: 800; font-size: .76rem;
+}
+.ava.b { background: #7be3ff; } .ava.c { background: #ffb36e; }
+.mini-feed .t { margin-left: auto; color: var(--muted); font-size: .66rem; flex: none; }
+/* 卡内 mini UI：体脂折线 */
+.fatline { margin-top: auto; }
+.fatline svg { width: 100%; height: 84px; overflow: visible; }
+.fatline path.l { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 320; stroke-dashoffset: 320; }
+.bento-card.visible .fatline path.l { animation: draw 1.8s var(--ease) .3s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.fatline path.a { fill: url(#fatgrad); opacity: 0; }
+.bento-card.visible .fatline path.a { animation: fadein 1s 1.4s forwards; }
+@keyframes fadein { to { opacity: 1; } }
+.big-delta { font-size: 1.9rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+/* 卡内 mini UI：提醒开关 */
+.mini-alert { margin-top: 1rem; display: flex; align-items: center; gap: .7rem; font-size: .76rem; border: 1px solid var(--line); border-radius: 11px; padding: .6rem .7rem; background: rgba(255,255,255,.02); }
+.toggle { width: 34px; height: 19px; border-radius: 99px; background: var(--accent); position: relative; flex: none; }
+.toggle::after { content: ""; position: absolute; top: 2px; right: 2px; width: 15px; height: 15px; border-radius: 50%; background: #0a0c10; }
+.risk { color: var(--danger); font-weight: 700; }
+
+/* ---------- 数据区 ---------- */
+.stats { background: var(--bg-2); }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-top: 3rem; }
+.stat {
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 1.9rem 1.5rem;
+  background: var(--surface); text-align: center;
+}
+.stat b {
+  display: block; font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 900; letter-spacing: -.03em;
+  color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.stat b small { font-size: .45em; font-weight: 700; }
+.stat span { font-size: .86rem; color: var(--muted); display: block; margin-top: .5rem; }
+.stat-note {
+  margin: 2.2rem auto 0; max-width: 700px; text-align: center; font-size: .92rem; color: var(--muted);
+  border: 1px dashed rgba(var(--accent-rgb), .3); border-radius: 14px; padding: 1rem 1.4rem; background: var(--accent-dim);
+}
+.stat-note b { color: var(--text); }
+
+/* ---------- 微信场景演示 ---------- */
+.chat-wrap { max-width: 460px; margin: 3rem auto 0; }
+.chat-frame {
+  border: 1px solid var(--line); border-radius: 22px; background: #12151b;
+  padding: 1.1rem 1rem 1.4rem; position: relative;
+}
+.chat-frame .chat-title { text-align: center; font-size: .8rem; color: var(--muted); padding-bottom: .9rem; border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
+.msg { display: flex; gap: .6rem; margin-bottom: .9rem; align-items: flex-end; }
+.msg .bubble {
+  max-width: 76%; padding: .6rem .85rem; border-radius: 13px; font-size: .84rem; line-height: 1.55; color: #111;
+}
+.msg.stu .bubble { background: #f2f3f5; border-bottom-left-radius: 3px; }
+.msg.me { flex-direction: row-reverse; }
+.msg.me .bubble { background: var(--wechat); border-bottom-right-radius: 3px; }
+.msg .ava { width: 32px; height: 32px; font-size: .8rem; }
+.msg time { font-size: .62rem; color: var(--muted); flex: none; }
+.bubble .card-in {
+  border-left: 3px solid #07c160; padding: .25rem .55rem; margin-bottom: .3rem;
+  background: rgba(7, 193, 96, .08); border-radius: 4px; font-size: .76rem;
+}
+.demo-tag { text-align: center; font-size: .72rem; color: var(--muted); margin-top: .9rem; }
+
+/* ---------- 定价 ---------- */
+.free-strip {
+  display: flex; align-items: center; justify-content: center; gap: .8rem; flex-wrap: wrap;
+  margin: 2.6rem auto 1.4rem; font-size: .92rem; color: var(--muted);
+}
+.free-strip b { color: var(--text); }
+.price-card {
+  max-width: 440px; margin: 0 auto; border-radius: 1.6rem; padding: 2.6rem 2.2rem;
+  border: 1px solid rgba(var(--accent-rgb), .45); background: var(--surface);
+  box-shadow: 0 0 80px rgba(var(--accent-rgb), .1); text-align: center; position: relative;
+}
+.price-card .badge {
+  position: absolute; top: -13px; left: 50%; translate: -50% 0;
+  background: var(--accent); color: #0a0c10; font-size: .74rem; font-weight: 800;
+  padding: .3rem .95rem; border-radius: 99px; white-space: nowrap;
+}
+.price-line { display: flex; align-items: baseline; justify-content: center; gap: .2rem; margin: 1rem 0 .2rem; }
+.price-line .cur { font-size: 1.4rem; font-weight: 700; }
+.price-line .num { font-size: 4.2rem; font-weight: 900; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.price-line .per { color: var(--muted); }
+.anchor-note { font-size: .84rem; color: var(--muted); margin-bottom: 1.6rem; }
+.anchor-note b { color: var(--accent); }
+.feat-list { text-align: left; margin: 0 auto 1.8rem; max-width: 320px; }
+.feat-list li { padding: .42rem 0; font-size: .92rem; display: flex; gap: .65rem; align-items: baseline; }
+.feat-list li::before { content: "✓"; content: "✓" / ""; color: var(--accent); font-weight: 800; }
+
+/* ---------- FAQ ---------- */
+.faq { max-width: 700px; margin: 3rem auto 0; scroll-margin-top: 86px; }
+.faq details { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); margin-bottom: .8rem; overflow: hidden; }
+.faq summary {
+  cursor: pointer; list-style: none; padding: 1.1rem 1.3rem; font-weight: 600; font-size: .98rem;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  transition: background var(--dur);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { background: rgba(255, 255, 255, .03); }
+.faq summary::after { content: "+"; content: "+" / ""; font-size: 1.3rem; color: var(--accent); font-weight: 400; transition: rotate var(--dur) var(--ease); }
+.faq details[open] summary::after { rotate: 45deg; }
+.faq details p { padding: 0 1.3rem 1.2rem; color: var(--muted); font-size: .92rem; }
+
+/* ---------- 终极 CTA ---------- */
+.final { text-align: center; overflow: clip; }
+.final h2 { font-size: clamp(2rem, 5.5vw, 3.6rem); margin-bottom: 1rem; }
+.final .aurora i:nth-child(1) { left: 20%; top: 30%; }
+
+/* ---------- Footer ---------- */
+footer { border-top: 1px solid var(--line); padding: 3rem 1.5rem 4rem; background: var(--bg-2); }
+.foot-grid { max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: space-between; align-items: flex-start; }
+.foot-grid p { font-size: .84rem; color: var(--muted); }
+.konami-hint { font-family: ui-monospace, monospace; font-size: .68rem; opacity: .22; letter-spacing: .2em; margin-top: 1.2rem; user-select: none; }
+/* 卷腹小游戏 */
+.crunch-game { text-align: center; font-size: .8rem; color: var(--muted); }
+.crunch-guy {
+  font-size: 2.6rem; cursor: pointer; display: inline-block; user-select: none; -webkit-user-select: none;
+  transition: transform .14s var(--ease); line-height: 1;
+}
+.crunch-guy.crunch { transform: rotate(-28deg) translateY(5px) scale(.92); }
+.crunch-count { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--text); }
+
+/* ---------- 彩蛋视觉 ---------- */
+/* Beast 模式心率脉冲 */
+body.beast::before {
+  content: ""; position: fixed; inset: 0; z-index: 200; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(255, 40, 40, .35));
+  animation: heartbeat .42s ease-in-out 4;
+}
+@keyframes heartbeat { 0%, 100% { opacity: 0; } 35% { opacity: 1; } }
+/* 横幅 banner（成就 / beast） */
+.egg-banner {
+  position: fixed; top: 18%; left: 50%; z-index: 210; translate: -50% 0;
+  background: var(--accent); color: #0a0c10; font-weight: 900;
+  font-size: clamp(1.2rem, 4vw, 2rem); padding: .8rem 2rem; border-radius: 16px;
+  box-shadow: 0 20px 70px var(--accent-glow); white-space: nowrap;
+  opacity: 0; scale: .7; transition: opacity .3s var(--ease), scale .35s var(--ease);
+  pointer-events: none;
+}
+.egg-banner.show { opacity: 1; scale: 1; }
+/* Toast */
+.toast {
+  position: fixed; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); left: 50%; translate: -50% 16px; z-index: 210;
+  background: var(--surface-2); border: 1px solid var(--line); color: var(--text);
+  padding: .75rem 1.3rem; border-radius: 99px; font-size: .9rem;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .5); opacity: 0; transition: opacity .3s, translate .35s var(--ease);
+  pointer-events: none; max-width: 90vw; text-align: center;
+}
+.toast.show { opacity: 1; translate: -50% 0; }
+/* 教练督促气泡（idle 彩蛋） */
+.nudge[hidden] { display: none; }
+.nudge {
+  position: fixed; right: 18px; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); z-index: 150; max-width: 270px;
+  display: flex; gap: .7rem; align-items: flex-start;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 16px; border-bottom-right-radius: 4px;
+  padding: .9rem 1rem; font-size: .85rem; box-shadow: 0 18px 50px rgba(0, 0, 0, .5);
+  transform: translateX(130%); transition: transform .45s var(--ease);
+}
+.nudge.show { transform: none; }
+.nudge .ava { width: 34px; height: 34px; }
+.nudge button {
+  background: none; border: 0; color: var(--muted); font-size: 1rem; cursor: pointer;
+  position: absolute; top: 6px; right: 10px;
+}
+/* 组数徽章 */
+.sets-badge {
+  position: fixed; left: 18px; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); z-index: 150;
+  background: var(--surface-2); border: 1px solid rgba(var(--accent-rgb), .35); border-radius: 99px;
+  padding: .5rem 1rem; font-size: .8rem; display: none; align-items: center; gap: .5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+}
+.sets-badge.show { display: flex; }
+.nudge.show ~ .sets-badge { opacity: 0; pointer-events: none; } /* 教练气泡出现时避让 */
+.sets-badge b { color: var(--accent); font-variant-numeric: tabular-nums; }
+/* 隐藏邀请码 */
+.promo {
+  margin: 1.6rem auto 0; max-width: 420px; text-align: center; display: none;
+  border: 1px dashed var(--accent); border-radius: 14px; padding: 1rem 1.3rem;
+  background: var(--accent-dim); font-size: .9rem;
+}
+.promo.show { display: block; animation: pop .5s var(--ease); }
+.promo code { font-family: ui-monospace, monospace; font-weight: 800; color: var(--accent); font-size: 1.05rem; letter-spacing: .08em; }
+
+/* ---------- 自定义光标（仅精准指针设备） ---------- */
+.cursor-dot, .cursor-ring { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .cursor-dot, .cursor-ring {
+    display: block; position: fixed; top: 0; left: 0; z-index: 300; pointer-events: none;
+    border-radius: 50%; translate: -50% -50%; opacity: 0;
+  }
+  .cursor-dot.on, .cursor-ring.on { opacity: 1; }
+  .cursor-dot { width: 7px; height: 7px; background: var(--accent); transition: opacity .25s; }
+  .cursor-ring {
+    width: 34px; height: 34px; border: 1.5px solid rgba(var(--accent-rgb), .55);
+    transition: width .25s var(--ease), height .25s var(--ease), border-color .25s, background-color .25s, opacity .25s;
+  }
+  .cursor-ring.big { width: 56px; height: 56px; background: rgba(var(--accent-rgb), .08); border-color: var(--accent); }
+}
+
+/* ---------- 粒子画布 ---------- */
+#fx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 220; pointer-events: none; }
+
+/* ---------- 移动端底部固定 CTA ---------- */
+.mobile-cta { display: none; }
+
+/* ---------- 性能：屏外区块跳过渲染 ---------- */
+.lazy-render { content-visibility: auto; contain-intrinsic-size: auto 720px; }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 1240px) {
+  .float-card.fc1 { left: 0; }
+  .float-card.fc2 { right: 0; }
+}
+@media (max-width: 960px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+  .hero { padding-top: 6.5rem; }
+  .vs-grid { grid-template-columns: 1fr; }
+  nav.menu { display: none; }
+  .float-card.fc1 { left: 0; } .float-card.fc2 { right: 0; }
+  .mobile-cta {
+    display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 140;
+    padding: .8rem 1rem calc(.8rem + env(safe-area-inset-bottom));
+    background: rgba(10, 12, 16, .9); border-top: 1px solid var(--line);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .mobile-cta { background: rgba(10, 12, 16, .72); backdrop-filter: blur(14px); }
+  }
+  .mobile-cta .btn { width: 100%; }
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .nudge, .sets-badge { bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
+  .toast { bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 520px) {
+  .bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .b-lg, .b-md, .b-sm { grid-column: auto; grid-row: auto; }
+  .bento-card { min-height: 150px; }
+  .stat-grid { grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .trust { gap: 1.3rem; }
+}
+
+/* ---------- 动效总闸：reduce 而非 remove ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    animation-timeline: none !important;
+  }
+  html { scroll-behavior: auto; }
+  .reveal, h1 .ch { opacity: 1 !important; transform: none !important; }
+  .fatline path.l { stroke-dashoffset: 0 !important; }
+  .fatline path.a { opacity: 1 !important; }
+  .mp-bar i { width: 50%; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="progress" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<!-- ============ 导航 ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo" id="logo" title="练程" role="button" tabindex="0" aria-label="练程 Logo">
+      <span class="logo-mark">练</span>
+      <span>练程 <span class="pinyin">LIÀNCHÉNG</span></span>
+    </div>
+    <nav class="menu" aria-label="主导航">
+      <a href="#pain">痛点</a>
+      <a href="#features">功能</a>
+      <a href="#stats">数据</a>
+      <a href="#pricing">定价</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-sm magnetic" href="#pricing" style="margin-left:auto">免费开始带练</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ Hero ============ -->
+<section class="hero" aria-label="练程介绍">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span><span class="en" id="scramble" data-text="LIANCHENG · COACH OS" aria-hidden="true">LIANCHENG · COACH OS</span><span class="sr-only">LIANCHENG · COACH OS</span></span>
+      <h1 class="headline" id="headline">陪学员，<span class="grad">练到成</span></h1>
+      <p class="hero-sub" id="heroSub">练程是<strong>自由私人教练</strong>的远程私教助理——训练计划、打卡点评、体脂趋势、课时台账一站管齐。把 1 个学员的服务做到顶级水准，再用同样的精力<strong>带 20 个</strong>。</p>
+      <div class="hero-ctas">
+        <div>
+          <a class="btn btn-primary magnetic" id="mainCta" href="#pricing">免费开始带练 <span aria-hidden="true">→</span><span class="hold-ring" aria-hidden="true"></span></a>
+          <p class="cta-note">免费档带 3 个学员 · 无需绑卡 · 30 秒开通</p>
+        </div>
+        <a class="btn btn-ghost magnetic" href="#features">30 秒看完六大功能</a>
+      </div>
+      <div class="trust" aria-label="产品关键指标">
+        <div><b><em class="count" data-target="3">0</em> 秒</b>学员打开即见今日训练</div>
+        <div><b><em class="count" data-target="30">0</em> 分钟</b>打卡点评回到学员手机</div>
+        <div><b><em class="count" data-target="30">0</em> 分钟/天</b>催打卡、翻记录的时间省回来</div>
+      </div>
+    </div>
+
+    <!-- 纯 CSS 手机样机：学员端小程序「今日训练」 -->
+    <div class="stage">
+      <div class="phone" id="phone" aria-label="学员端小程序界面演示" role="img">
+        <div class="notch" aria-hidden="true"></div>
+        <div class="mp-head"><b>今日训练 · 下肢力量</b><span>周四</span></div>
+        <div class="mp-bar" aria-hidden="true"><i></i></div>
+        <div class="mp-item done"><span class="mp-check" aria-hidden="true"></span><div><div class="nm">杠铃深蹲</div><div class="dt">4 组 × 8 次 · 60kg</div></div></div>
+        <div class="mp-item done"><span class="mp-check" aria-hidden="true"></span><div><div class="nm">罗马尼亚硬拉</div><div class="dt">4 组 × 10 次 · 50kg</div></div></div>
+        <div class="mp-item"><span class="mp-check" aria-hidden="true"></span><div><div class="nm">保加利亚分腿蹲</div><div class="dt">3 组 × 12 次 / 侧</div></div></div>
+        <div class="mp-item"><span class="mp-check" aria-hidden="true"></span><div><div class="nm">平板支撑</div><div class="dt">3 组 × 60 秒</div></div></div>
+        <div class="mp-coach"><b>王教练：</b>髋的位置稳多了，下周杠铃加 2.5kg，冲 💪</div>
+        <button class="mp-btn" type="button" tabindex="-1">完成打卡</button>
+      </div>
+      <div class="float-card fc1" aria-hidden="true">
+        <div>🔔 18:00 自动提醒</div>
+        <div style="color:var(--muted);margin-top:.2rem">小李今天还没打卡，已替你催了</div>
+      </div>
+      <div class="float-card fc2" aria-hidden="true">
+        <b>体脂趋势 <span class="up">↓ 1.8%</span></b>
+        <svg class="spark" viewBox="0 0 110 34" aria-hidden="true"><polyline points="2,8 20,12 38,11 56,17 74,20 92,24 108,28"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 痛点对比 ============ -->
+<section class="pain lazy-render" id="pain">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker">每个自由教练都懂</span>
+      <h2>带 20 个学员的一天，<br>不该是这样过的</h2>
+      <p class="section-sub">计划在 Excel，打卡在微信群，体脂数据埋在聊天记录里——每天 1~2 小时耗在这些<b>不产生一分钱课时费</b>的事上。</p>
+    </div>
+    <div class="vs-grid">
+      <div class="vs-card vs-bad reveal" style="--i:0">
+        <h3><span class="vs-tag">现在</span>Excel + 微信群 + 备忘录</h3>
+        <ul>
+          <li>计划、打卡、体脂散在三个地方，查一条数据翻三个 App</li>
+          <li>学员深夜发来打卡，你两天后才看到——他的热情正在变凉</li>
+          <li>带了三个月，拿不出一张说得清成果的变化曲线</li>
+          <li>学员快流失了心里清楚，手上却没有任何工具拉他回来</li>
+          <li>一个人盯 20 个人，「被关注的感觉」根本给不过来</li>
+        </ul>
+      </div>
+      <div class="vs-card vs-good reveal" style="--i:1">
+        <h3><span class="vs-tag">用练程</span>一套系统，全部管齐</h3>
+        <ul>
+          <li>计划、打卡、体脂、课时、点评——一个后台全部对齐</li>
+          <li>学员一打卡你立刻看到，30 分钟内点评回到他手机</li>
+          <li>体脂趋势自动成图，每一点进步都拿得出手</li>
+          <li>连续 5 天未打卡自动亮风险信号，流失之前先看到</li>
+          <li>催打卡、盯进度交给系统，你只负责「教练」本身</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 功能 Bento ============ -->
+<section id="features" class="lazy-render">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker">六件事，一个后台</span>
+      <h2>你的整套学员服务，<br>装进一个系统</h2>
+    </div>
+    <div class="bento">
+      <article class="bento-card b-lg reveal tilt" style="--i:0">
+        <span class="icon" aria-hidden="true">📋</span>
+        <h3>一对一训练计划</h3>
+        <p>3 分钟排好一周课：一键复制已有计划，学员上次实际完成的重量自动带入，动作配解剖图与演示。</p>
+        <div class="mini-week" aria-hidden="true">
+          <span class="on"><b>一</b>推</span><span><b>二</b>休</span><span class="on"><b>三</b>拉</span><span><b>四</b>腿</span><span><b>五</b>休</span><span class="on"><b>六</b>全身</span><span><b>日</b>休</span>
+        </div>
+        <span class="chip">⌘ 复制上周计划</span><span class="chip">上次 60kg → 建议 62.5kg</span>
+      </article>
+
+      <article class="bento-card b-lg reveal tilt" style="--i:1">
+        <span class="icon" aria-hidden="true">⚡</span>
+        <h3>实时打卡 Feed + 点评</h3>
+        <p>所有学员的打卡像朋友圈一样汇成一条流，文字 + 配图 + 常用语快速点评——被关注的感觉，就是续课的理由。</p>
+        <div class="mini-feed" aria-hidden="true">
+          <div><span class="ava">李</span>完成下肢力量日 · 自评 8 分<span class="t">2 分钟前</span></div>
+          <div><span class="ava b">张</span>晨跑 5km 打卡 📷<span class="t">26 分钟前</span></div>
+          <div><span class="ava c">陈</span>体测照已上传，求点评<span class="t">1 小时前</span></div>
+        </div>
+      </article>
+
+      <article class="bento-card b-sm reveal tilt" style="--i:2">
+        <span class="icon" aria-hidden="true">📉</span>
+        <h3>体脂趋势</h3>
+        <p>体重、体脂、围度自动成曲线。</p>
+        <div class="fatline" aria-hidden="true">
+          <span class="big-delta">-1.8%</span>
+          <svg viewBox="0 0 200 84">
+            <defs>
+              <linearGradient id="fatgrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="rgba(200,255,31,.25)"/><stop offset="1" stop-color="rgba(200,255,31,0)"/>
+              </linearGradient>
+            </defs>
+            <path class="a" d="M0,38 C30,40 45,46 70,50 C100,55 120,52 150,62 C170,68 185,70 200,72 L200,84 L0,84 Z"/>
+            <path class="l" d="M0,38 C30,40 45,46 70,50 C100,55 120,52 150,62 C170,68 185,70 200,72"/>
+          </svg>
+          <p style="font-size:.72rem;color:var(--muted)">8 周 · 平均体脂变化</p>
+        </div>
+      </article>
+
+      <article class="bento-card b-sm reveal tilt" style="--i:3">
+        <span class="icon" aria-hidden="true">🔔</span>
+        <h3>监督提醒</h3>
+        <p>当天 18:00 没打卡，系统自动提醒学员、同步通知你——盯到位的事交给练程。</p>
+        <div class="mini-alert" aria-hidden="true"><span class="toggle"></span>未打卡自动提醒 · 已开启</div>
+        <div class="mini-alert" aria-hidden="true">⚠️ <span>小周 <span class="risk">连续 5 天未打卡</span></span></div>
+      </article>
+
+      <article class="bento-card b-md reveal tilt" style="--i:4">
+        <span class="icon" aria-hidden="true">🗂️</span>
+        <h3>课时与服务台账</h3>
+        <p>剩余课时、包月到期、线下课记录、学员标签一处管齐，临近到期自动亮灯——流失之前先看到。</p>
+      </article>
+
+      <article class="bento-card b-md reveal tilt" style="--i:5">
+        <span class="icon" aria-hidden="true">📄</span>
+        <h3>PDF 周报 + 教练主页</h3>
+        <p>一键导出带体脂趋势、完成度和教练寄语的周报；你的资质与案例主页，在学员转介绍时替你说话。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 数据 ============ -->
+<section class="stats lazy-render" id="stats">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker">为什么是「触达」</span>
+      <h2>学员买的不只是课，<br>是「被盯着」的感觉</h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat reveal" style="--i:0"><b><span class="count" data-target="20">0</span><small> 个</small></b><span>一个教练的服务上限，被重新定义</span></div>
+      <div class="stat reveal" style="--i:1"><b><span class="count" data-target="3">0</span><small> 秒</small></b><span>学员打开小程序即见今日训练</span></div>
+      <div class="stat reveal" style="--i:2"><b>≥<span class="count" data-target="3">0</span><small> 次/周</small></b><span>练程帮你把每位学员的触达频次提上来</span></div>
+      <div class="stat reveal" style="--i:3"><b><span class="count" data-target="15">0</span><small> 小时/月</small></b><span>从杂务里省回来的，全是可以卖课的时间</span></div>
+    </div>
+    <p class="stat-note reveal">行业调研里，每月只上 1~3 节课的「低触达」学员，续课率往往<b>不到两成</b>。<br>把「教练在看着我」变成日常，是把人留下来的关键杠杆——这正是练程的北极星指标。</p>
+  </div>
+</section>
+
+<!-- ============ 微信场景演示 ============ -->
+<section class="lazy-render" id="scene">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker">真实工作流</span>
+      <h2>用练程之后，<br>你和学员的微信长这样</h2>
+    </div>
+    <div class="chat-wrap reveal">
+      <div class="chat-frame" role="img" aria-label="教练与学员的微信对话场景演示">
+        <div class="chat-title">小李 · 学员</div>
+        <div class="msg stu"><span class="ava">李</span><div class="bubble"><div class="card-in">✅ 练程打卡 · 下肢力量日<br>深蹲 60kg 全部完成</div>教练我做到了！！</div><time>21:47</time></div>
+        <div class="msg me"><time>21:52</time><div class="bubble">看到了👍 第三组深度比上周标准多了，下周加 2.5kg，按计划来</div><span class="ava b">我</span></div>
+        <div class="msg stu"><span class="ava">李</span><div class="bubble">哈哈第一次有教练盯这么紧 😂</div><time>21:53</time></div>
+        <div class="msg stu"><span class="ava">李</span><div class="bubble">对了教练，下个月的课帮我接着排上</div><time>21:54</time></div>
+      </div>
+      <p class="demo-tag">— 场景演示 · 打卡 30 分钟内被点评的学员，更愿意主动找你续课 —</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 定价 ============ -->
+<section id="pricing" class="lazy-render">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="kicker">一个价格，全部功能</span>
+      <h2>先免费带 3 个学员，<br>跑顺了再升级</h2>
+    </div>
+    <p class="free-strip reveal"><span>🎁</span><span><b>免费档</b>：3 个学员 · 核心功能全开 · 不限时长</span></p>
+    <div class="price-card reveal">
+      <span class="badge">PRO · 给认真带学员的你</span>
+      <div class="price-line"><span class="cur">¥</span><span class="num count" data-target="99">0</span><span class="per">/ 月</span></div>
+      <p class="anchor-note">≈ 每天 <b>¥3.3</b> · 一个月不到半节课的课时费</p>
+      <ul class="feat-list">
+        <li>最多 20 个学员同时在管</li>
+        <li>训练计划 + 模板复制 + 实际数据带入</li>
+        <li>打卡 Feed、配图点评、常用语</li>
+        <li>体脂趋势、对比照、围度记录</li>
+        <li>未打卡自动提醒 + 流失风险信号</li>
+        <li>课时台账 + PDF 周报 + 教练主页</li>
+      </ul>
+      <a class="btn btn-primary magnetic" href="#" id="priceCta" style="width:100%">免费开始带练</a>
+      <p class="cta-note">无需绑卡 · 随时取消 · 数据随时导出</p>
+    </div>
+    <div class="promo" id="promo" aria-live="polite">
+      🏆 彩蛋解锁 · 内测优先体验码：<code>LIANCHENG-BETA</code><br>
+      <span style="font-size:.78rem;color:var(--muted)">你认真读完了整页 3 遍——这就是教练说的「把组数做满」。</span>
+    </div>
+
+    <div class="faq" id="faq">
+      <h3 class="center" style="margin-bottom:1.6rem;font-size:1.25rem">最后几个问题</h3>
+      <details class="reveal">
+        <summary>学员需要付费吗？</summary>
+        <p>不需要。学员端是免费微信小程序，扫你的邀请码即可加入，3 秒看到今日训练。付费的只有教练端，而且可以先用免费档。</p>
+      </details>
+      <details class="reveal">
+        <summary>我是脱离场馆的自由教练，适合用吗？</summary>
+        <p>练程就是为你设计的。不需要场馆系统、不需要前台——一个人，就是一支完整的服务团队。</p>
+      </details>
+      <details class="reveal">
+        <summary>学员的数据安全吗？</summary>
+        <p>每位教练的数据相互隔离，体测照片需学员单独授权后才可上传，且仅你和学员本人可见。</p>
+      </details>
+      <details class="reveal">
+        <summary>数据能导出吗？会被平台绑死吗？</summary>
+        <p>学员档案与周报支持一键导出 PDF，你的学员关系永远属于你自己。</p>
+      </details>
+      <details class="reveal">
+        <summary>免费档和 Pro 的区别只是学员数量吗？</summary>
+        <p>是的，功能不做阉割。免费档最多 3 个学员，适合先把流程跑顺；学员多了，再升 Pro。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 终极 CTA ============ -->
+<section class="final">
+  <div class="aurora" aria-hidden="true"><i></i><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="wrap reveal">
+    <h2>把催打卡的时间，<br><span class="grad" style="background:linear-gradient(92deg,var(--accent),#7be3ff);-webkit-background-clip:text;background-clip:text;color:transparent">还给训练本身</span></h2>
+    <p class="section-sub" style="margin-bottom:2.2rem">免费带 3 个学员开始。今晚建好计划，明早学员就能打卡。</p>
+    <a class="btn btn-primary magnetic" href="#pricing" style="font-size:1.1rem;padding:1rem 2.4rem">免费开始带练 →</a>
+    <p class="cta-note">无需绑卡 · 随时取消 · 30 秒开通</p>
+  </div>
+</section>
+</main>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="logo" style="margin-bottom:.8rem"><span class="logo-mark">练</span><span>练程 <span class="pinyin">LIÀNCHÉNG</span></span></div>
+      <p>自由教练的远程私教助理<br>© 2026 练程 · 备案号申请中</p>
+      <p class="konami-hint" aria-hidden="true">↑ ↑ ↓ ↓ ← → ← → B A</p>
+    </div>
+    <div class="crunch-game">
+      <p style="margin-bottom:.4rem">组间无聊？帮他做组卷腹 👇</p>
+      <span class="crunch-guy" id="crunchGuy" role="button" tabindex="0" aria-label="点击做卷腹小游戏">🧍</span>
+      <p>卷腹 <span class="crunch-count" id="crunchCount">0</span> / 20</p>
+    </div>
+  </div>
+</footer>
+
+<!-- 移动端底部固定 CTA -->
+<div class="mobile-cta"><a class="btn btn-primary" href="#pricing">免费开始带练 · 免费档 3 学员</a></div>
+
+<!-- 彩蛋 UI 容器 -->
+<div class="egg-banner" id="eggBanner" role="status" aria-live="polite"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="nudge" id="nudge" aria-live="polite" hidden>
+  <span class="ava">练</span>
+  <div>还在组间休息？<b>组间别超过 90 秒</b>——回来接着看，教练盯着你呢 👀</div>
+  <button id="nudgeClose" aria-label="关闭提示">×</button>
+</div>
+<div class="sets-badge" id="setsBadge">🏋️ 今日组数 <b id="setsNum">0</b> / 3 <span style="color:var(--muted)">读到底 = 完成一组</span></div>
+<div id="footSentinel" style="height:1px" aria-hidden="true"></div>
+
+<script>
+/* ============================================================
+   练程 Landing · 交互层（零依赖）
+   reveal / count-up / tilt / magnetic / cursor / particles
+   彩蛋：Konami·Logo×7·长按CTA·idle·触底计组·深夜·卷腹·console
+   ============================================================ */
+(() => {
+"use strict";
+const RMQ = matchMedia("(prefers-reduced-motion: reduce)");
+let RM = RMQ.matches;
+RMQ.addEventListener?.("change", (e) => { RM = e.matches; }); // 会话中切换偏好时同步生效
+const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
+const $ = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const store = { // localStorage 在隐私模式下可能抛错，降级为不记忆
+  get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
+};
+
+/* ---------- 滚动进度条 JS 兜底 ---------- */
+if (!CSS.supports("animation-timeline: scroll()")) {
+  const bar = $(".progress");
+  const upd = () => {
+    const h = document.documentElement;
+    const p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+    bar.style.transform = `scaleX(${p})`;
+  };
+  addEventListener("scroll", upd, { passive: true }); upd();
+}
+
+/* ---------- Hero 标题逐字入场（保留读屏语义） ---------- */
+const headline = $("#headline");
+if (headline && !RM) {
+  const split = (node) => {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        [...n.textContent].forEach((c) => {
+          const s = document.createElement("span");
+          s.className = "ch"; s.textContent = c; s.setAttribute("aria-hidden", "true");
+          frag.appendChild(s);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) split(n);
+    });
+  };
+  headline.setAttribute("aria-label", headline.textContent);
+  split(headline);
+  $$(".ch", headline).forEach((s, i) => s.style.setProperty("--i", i));
+}
+
+/* ---------- eyebrow 文字解码效果 ---------- */
+const scrambleEl = $("#scramble");
+if (scrambleEl && !RM) {
+  const target = scrambleEl.dataset.text;
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/·";
+  let i = 0;
+  const id = setInterval(() => {
+    scrambleEl.textContent = target.slice(0, i) +
+      [...Array(Math.max(target.length - i, 0))].map(() => chars[Math.random() * chars.length | 0]).join("");
+    if (i++ > target.length) { clearInterval(id); scrambleEl.textContent = target; }
+  }, 38);
+}
+
+/* ---------- IO：reveal 入场 ---------- */
+const io = new IntersectionObserver((es) => {
+  es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } });
+}, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+$$(".reveal, .bento-card").forEach((el) => io.observe(el));
+
+/* ---------- IO：数字滚动计数 ---------- */
+const easeOut = (t) => 1 - Math.pow(2, -10 * t);
+const countUp = (el) => {
+  const end = +el.dataset.target;
+  if (RM) { el.textContent = end; return; }
+  const t0 = performance.now(), dur = 1500;
+  const tick = (now) => {
+    const p = Math.min((now - t0) / dur, 1);
+    el.textContent = Math.round(end * easeOut(p)).toLocaleString();
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+const cio = new IntersectionObserver((es) => {
+  es.forEach((e) => { if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } });
+}, { threshold: 0.6 });
+$$(".count").forEach((el) => cio.observe(el));
+
+/* ---------- 磁吸按钮 ---------- */
+if (FINE && !RM) $$(".magnetic").forEach((el) => {
+  el.addEventListener("pointermove", (e) => {
+    const r = el.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
+    el.style.translate = `${x * .22}px ${y * .22}px`;
+  });
+  el.addEventListener("pointerleave", () => { el.style.translate = ""; });
+});
+
+/* ---------- 3D 倾斜：bento 卡片 + 手机样机 ---------- */
+const tiltify = (el, max = 7) => {
+  el.addEventListener("pointermove", (e) => {
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+    el.style.setProperty("--ry", (px * max) + "deg");
+    el.style.setProperty("--rx", (-py * max) + "deg");
+    el.style.transform = `perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(0)`;
+  });
+  el.addEventListener("pointerleave", () => {
+    el.style.transform = "";
+    el.style.removeProperty("--rx"); el.style.removeProperty("--ry");
+  });
+};
+if (FINE && !RM) { $$(".tilt").forEach((el) => tiltify(el)); tiltify($("#phone"), 5); }
+
+/* ---------- 自定义光标 ---------- */
+if (FINE && !RM) {
+  const dot = $(".cursor-dot"), ring = $(".cursor-ring");
+  let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y, seen = false;
+  addEventListener("pointermove", (e) => {
+    x = e.clientX; y = e.clientY;
+    if (!seen) { seen = true; dot.classList.add("on"); ring.classList.add("on"); }
+  }, { passive: true });
+  (function loop() {
+    rx += (x - rx) * .16; ry += (y - ry) * .16;
+    if (seen) {
+      dot.style.transform = `translate(${x}px, ${y}px)`;
+      ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    }
+    requestAnimationFrame(loop);
+  })();
+  $$("a, button, summary, .logo, .crunch-guy").forEach((el) => {
+    el.addEventListener("pointerenter", () => ring.classList.add("big"));
+    el.addEventListener("pointerleave", () => ring.classList.remove("big"));
+  });
+}
+
+/* ---------- 共享 Canvas 粒子系统（confetti / emoji 爆发） ---------- */
+const canvas = $("#fx"), ctx = canvas.getContext("2d");
+let ps = [], fxRunning = false;
+const fitCanvas = () => { canvas.width = innerWidth * devicePixelRatio; canvas.height = innerHeight * devicePixelRatio; ctx.scale(devicePixelRatio, devicePixelRatio); };
+fitCanvas(); addEventListener("resize", fitCanvas);
+const burst = (x, y, n = 90, emojis = null) => {
+  if (RM) return;
+  for (let i = 0; i < n && ps.length < 380; i++) {
+    ps.push({
+      x, y,
+      vx: (Math.random() - .5) * 11,
+      vy: Math.random() * -10 - 3,
+      g: .3, rot: Math.random() * 360, vr: (Math.random() - .5) * 14,
+      life: 1, decay: .008 + Math.random() * .012,
+      hue: 60 + Math.random() * 80,
+      emoji: emojis ? emojis[i % emojis.length] : null,
+      size: emojis ? 18 + Math.random() * 14 : 5 + Math.random() * 6,
+    });
+  }
+  if (!fxRunning) { fxRunning = true; requestAnimationFrame(fxLoop); }
+};
+function fxLoop() {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  ps = ps.filter((p) => p.life > 0);
+  for (const p of ps) {
+    p.x += p.vx; p.y += p.vy; p.vy += p.g; p.rot += p.vr; p.life -= p.decay;
+    ctx.save();
+    ctx.globalAlpha = Math.max(p.life, 0);
+    ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
+    if (p.emoji) { ctx.font = `${p.size}px serif`; ctx.textAlign = "center"; ctx.fillText(p.emoji, 0, 0); }
+    else { ctx.fillStyle = `hsl(${p.hue} 95% 60%)`; ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * .6); }
+    ctx.restore();
+  }
+  if (ps.length) requestAnimationFrame(fxLoop);
+  else { fxRunning = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+}
+
+/* ---------- Banner / Toast ---------- */
+const banner = $("#eggBanner"), toastEl = $("#toast");
+let bannerT, toastT;
+const showBanner = (msg, ms = 2200) => {
+  banner.textContent = msg; banner.classList.add("show");
+  clearTimeout(bannerT); bannerT = setTimeout(() => banner.classList.remove("show"), ms);
+};
+const toast = (msg, ms = 2600) => {
+  toastEl.textContent = msg; toastEl.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove("show"), ms);
+};
+
+/* ---------- 彩蛋 1 · Konami Code → BEAST MODE ---------- */
+const pat = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+let cur = 0;
+document.addEventListener("keydown", (e) => {
+  cur = (e.key === pat[cur] || e.key.toLowerCase() === pat[cur]) ? cur + 1 : (e.key === pat[0] ? 1 : 0);
+  if (cur === pat.length) {
+    cur = 0;
+    document.body.classList.add("beast");
+    setTimeout(() => document.body.classList.remove("beast"), 1800);
+    burst(innerWidth / 2, innerHeight * .45, 150, ["💪","🏋️","🔥","⚡"]);
+    showBanner("🔥 BEAST MODE UNLOCKED 💪");
+  }
+});
+
+/* ---------- 彩蛋 2 · Logo 连点 7 次 → 肌肉模式 ---------- */
+const logoEl = $("#logo");
+let taps = 0, tapT;
+const muscleToggle = () => {
+  const flip = () => {
+    document.body.classList.toggle("muscle");
+    const on = document.body.classList.contains("muscle");
+    $$(".btn-primary").forEach((b) => {
+      b.childNodes.forEach((n) => {
+        if (n.nodeType === 3 && n.textContent.trim()) {
+          if (!n.origText) n.origText = n.textContent;
+          n.textContent = on ? "开练！" : n.origText;
+        }
+      });
+    });
+    showBanner(on ? "💪 肌肉模式 ON · 主题已增重" : "🧊 肌肉模式 OFF");
+    if (on) burst(innerWidth / 2, 120, 60, ["💪"]);
+  };
+  if (document.startViewTransition && !RM) document.startViewTransition(flip); else flip();
+};
+const tapLogo = () => {
+  clearTimeout(tapT);
+  if (++taps >= 7) { taps = 0; muscleToggle(); }
+  else if (taps >= 4) toast(`还差 ${7 - taps} 下……练满一组有惊喜 💪`);
+  tapT = setTimeout(() => (taps = 0), 1600);
+};
+logoEl.addEventListener("click", tapLogo);
+logoEl.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tapLogo(); } });
+
+/* ---------- 彩蛋 3 · 长按主 CTA 3 秒 = 等长收缩测试 ---------- */
+const cta = $("#mainCta");
+let holdT0 = 0, holdRAF = 0, suppress = false;
+const HOLD = 3000, DEAD = 1500; // 1.5 秒以内一律视为普通点击，绝不拦截转化
+const holdTick = (now) => {
+  const p = Math.min((now - holdT0) / HOLD, 1);
+  cta.style.setProperty("--p", p * 100);
+  if (p >= 1) {
+    endHold(true);
+    suppress = true; // 庆祝时刻不跳走，下一次点击恢复正常导航
+    burst(...ctaCenter(), 120, ["🏅","💪","🔥"]);
+    showBanner("🏅 成就解锁 · 稳如平板支撑");
+    toast("3 秒等长收缩测试通过——这份坚持，你的学员也会有");
+  } else holdRAF = requestAnimationFrame(holdTick);
+};
+const ctaCenter = () => { const r = cta.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+const beginHold = () => {
+  holdT0 = performance.now(); suppress = false;
+  cta.classList.add("holding");
+  holdRAF = requestAnimationFrame(holdTick);
+};
+const startHold = (e) => {
+  if (RM || holdT0 || !e.isPrimary || (e.pointerType === "mouse" && e.button !== 0)) return;
+  cta.setPointerCapture?.(e.pointerId);
+  beginHold();
+};
+const endHold = (done, silent = false) => {
+  cancelAnimationFrame(holdRAF);
+  cta.classList.remove("holding"); cta.style.setProperty("--p", 0);
+  if (!done && !silent && holdT0 && performance.now() - holdT0 > DEAD) {
+    suppress = true;
+    toast("再坚持一下！教练在看着你 👀（按住 3 秒试试）");
+  }
+  holdT0 = 0;
+};
+cta.addEventListener("pointerdown", startHold);
+cta.addEventListener("pointerup", () => endHold(false));
+cta.addEventListener("pointerleave", () => endHold(false));
+cta.addEventListener("pointercancel", () => endHold(false, true)); // 滚动取消不吐槽
+cta.addEventListener("keydown", (e) => { // 键盘玩家：按住空格 3 秒
+  if (e.key !== " ") return;
+  e.preventDefault();
+  if (!e.repeat && !holdT0 && !RM) beginHold();
+});
+cta.addEventListener("keyup", (e) => { if (e.key === " ") endHold(false); });
+cta.addEventListener("click", (e) => { if (suppress) { e.preventDefault(); suppress = false; } });
+
+/* ---------- 彩蛋 4 · Idle 60 秒 → 教练督促 ---------- */
+const nudge = $("#nudge");
+let idleT, nudgeHideT, nudged = false;
+const hideNudge = () => {
+  clearTimeout(nudgeHideT);
+  nudge.classList.remove("show");
+  setTimeout(() => { if (!nudge.classList.contains("show")) nudge.hidden = true; }, 500);
+};
+const showNudge = () => {
+  nudge.hidden = false;
+  requestAnimationFrame(() => requestAnimationFrame(() => nudge.classList.add("show")));
+  nudgeHideT = setTimeout(hideNudge, 10000); // 自己淡出，不被用户的回归动作秒杀
+};
+const resetIdle = () => {
+  if (nudged) return; // 教练只督促一次，不唠叨
+  clearTimeout(idleT);
+  idleT = setTimeout(() => { nudged = true; showNudge(); }, 60000);
+};
+["pointermove","keydown","scroll","click","touchstart"].forEach((ev) => addEventListener(ev, resetIdle, { passive: true }));
+$("#nudgeClose").addEventListener("click", (e) => { e.stopPropagation(); hideNudge(); });
+resetIdle();
+
+/* ---------- 彩蛋 5 · 滚动触底 ×3 = 完成组数 → 邀请码 ---------- */
+const setsBadge = $("#setsBadge"), setsNum = $("#setsNum"), promo = $("#promo");
+let sets = +(store.get("lc_sets") || 0), lastSet = 0;
+const refreshSets = () => {
+  setsNum.textContent = Math.min(sets, 3);
+  if (sets > 0) setsBadge.classList.add("show");
+  if (sets >= 3) { promo.classList.add("show"); setsBadge.classList.remove("show"); }
+};
+refreshSets();
+new IntersectionObserver((es) => {
+  es.forEach((e) => {
+    if (e.isIntersecting && Date.now() - lastSet > 5000 && sets < 3) {
+      lastSet = Date.now(); sets++;
+      store.set("lc_sets", sets);
+      refreshSets();
+      if (sets < 3) { toast(`第 ${sets} 组完成！再读 ${3 - sets} 遍到底，解锁隐藏彩蛋 🔔`); burst(innerWidth / 2, innerHeight - 120, 30, ["🔔"]); }
+      else { burst(innerWidth / 2, innerHeight / 2, 140, ["🏆","🎉","💪"]); showBanner("🏆 3 组打满 · 彩蛋已解锁"); $("#promo").scrollIntoView({ behavior: RM ? "auto" : "smooth", block: "center" }); }
+    }
+  });
+}, { threshold: 1 }).observe($("#footSentinel"));
+
+/* ---------- 彩蛋 6 · 深夜恢复提示（22:00–5:00） ---------- */
+const h = new Date().getHours();
+if (h >= 22 || h < 5) {
+  $("#heroSub").innerHTML = "夜猫子教练？记住：<strong>睡眠也是训练的一部分</strong> 😴 明早再排课也来得及——练程会替你盯着学员的打卡。";
+}
+
+/* ---------- 彩蛋 7 · 页脚卷腹小游戏 ---------- */
+const guy = $("#crunchGuy"), cnt = $("#crunchCount");
+let reps = 0, done20 = false;
+const crunch = () => {
+  guy.classList.add("crunch");
+  setTimeout(() => guy.classList.remove("crunch"), 150);
+  if (done20) return;
+  cnt.textContent = ++reps;
+  if (reps === 10) toast("一半了！核心收紧 🫁");
+  if (reps >= 20) {
+    done20 = true;
+    guy.textContent = "🤸";
+    burst(...(() => { const r = guy.getBoundingClientRect(); return [r.left + r.width / 2, r.top]; })(), 80, ["🎉","💪"]);
+    showBanner("🔥 热身完成 · 20 个卷腹");
+  }
+};
+guy.addEventListener("click", crunch);
+guy.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); crunch(); } });
+
+/* ---------- 彩蛋 8 · 开发者控制台 ---------- */
+console.log(
+  "%c练程 LiànChéng%c 你打开了开发者模式——这也算一种训练 💪\n试试：↑↑↓↓←→←→BA · 连点 Logo 7 次 · 按住主按钮 3 秒",
+  "background:#c8ff1f;color:#0a0c10;font-weight:900;padding:4px 10px;border-radius:6px;font-size:14px",
+  "color:#c8ff1f;font-size:12px;padding-left:8px"
+);
+
+/* ---------- 定价 CTA 占位行为 ---------- */
+$("#priceCta").addEventListener("click", (e) => {
+  e.preventDefault();
+  burst(...(() => { const r = e.currentTarget.getBoundingClientRect(); return [r.left + r.width / 2, r.top]; })(), 60);
+  toast("内测开放前，这里会接入注册表单——先收藏本页 🔖");
+});
+})();
+</script>
+</body>
+</html>
