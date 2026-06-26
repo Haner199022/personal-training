@@ -23,9 +23,12 @@
 1. **启动后端**（已验证可跑）
    ```bash
    cd ~/code/personal-training/backend
-   source .venv/bin/activate
-   uvicorn app.main:app --port 8000   # → http://127.0.0.1:8000/api/v1/health
+   ./run-dev.sh        # 持久化启动（8001，后台 nohup）；停止：./run-dev.sh stop
+   # 或手动：.venv/bin/uvicorn app.main:app --port 8001
+   # → http://127.0.0.1:8001/api/v1/health
    ```
+   > ⚠️ 用 **8001**，不要用 8000——本机 8000 被 AI Team OS API 占用，撞端口会导致后端时好时坏。
+   > dev 用本地 SQLite 种子库（`.env` 的 `DATABASE_URL=sqlite+aiosqlite:///./dev.db`），不要指向未搭建的 PostgreSQL。
 2. **装「微信开发者工具」**（macOS）：https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html
    - 这是 GUI 程序，必须你本人装 + 操作，命令行无法代替。
 3. **导入项目**：开发者工具 → 导入 → 选 `~/code/personal-training/student-mp/`

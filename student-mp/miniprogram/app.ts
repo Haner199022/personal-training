@@ -2,7 +2,8 @@
 App<{ globalData: { apiBase: string } }>({
   globalData: {
     // dev 指向本机后端；真机需备案 HTTPS 域名 + 开发者工具勾「不校验合法域名」
-    apiBase: "http://127.0.0.1:8000/api/v1",
+    // dev 后端走 8001（8000 被 AI Team OS API 占用）；真机需备案 HTTPS 域名 + 开发者工具勾「不校验合法域名」
+    apiBase: "http://127.0.0.1:8001/api/v1",
   },
   onLaunch() {
     if (!wx.getStorageSync("pt_stoken")) {
