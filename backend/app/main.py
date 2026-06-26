@@ -27,7 +27,7 @@ app = FastAPI(title="Personal-Training API", version="0.1.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,  # 用 Authorization Bearer，不用 cookie；避免 *+credentials 非法组合
     allow_methods=["*"],
     allow_headers=["*"],
 )

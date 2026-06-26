@@ -22,6 +22,10 @@ miniprogram/miniprogram_npm/
 .env
 .env.local
 .env.*.local
+.env.prod
+deploy/.env.prod
+!.env.prod.example
+!deploy/.env.prod.example
 secrets/
 
 # IDE

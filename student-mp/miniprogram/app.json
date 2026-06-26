@@ -1,25 +1,35 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/home/home",
     "pages/join/join",
     "pages/training/training",
     "pages/checkin-result/checkin-result",
+    "pages/metric/metric",
     "pages/body/body",
+    "pages/photo-compare/photo-compare",
+    "pages/inbox/inbox",
+    "pages/profile/profile",
+    "pages/privacy/privacy",
     "pages/coach/coach"
   ],
   "window": {
     "navigationBarTitleText": "私教助理",
-    "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTextStyle": "black",
-    "backgroundColor": "#f7f7f7"
+    "navigationBarBackgroundColor": "#0a0a0c",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#0a0a0c",
+    "backgroundTextStyle": "dark"
   },
   "tabBar": {
-    "color": "#999",
-    "selectedColor": "#ff6b35",
+    "color": "#8a8a96",
+    "selectedColor": "#A855F7",
+    "backgroundColor": "#141418",
+    "borderStyle": "black",
     "list": [
-      { "pagePath": "pages/home/home", "text": "训练" },
+      { "pagePath": "pages/home/home", "text": "首页" },
       { "pagePath": "pages/body/body", "text": "体脂" },
-      { "pagePath": "pages/coach/coach", "text": "教练" }
+      { "pagePath": "pages/inbox/inbox", "text": "消息" },
+      { "pagePath": "pages/profile/profile", "text": "我" }
     ]
   },
   "usingComponents": {},

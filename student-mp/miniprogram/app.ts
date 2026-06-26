@@ -1,11 +1,12 @@
-// 学员端入口。视觉：暖色系（橙）强化能量感，对比教练端冷色蓝。
-App<{ globalData: { token: string | null; apiBase: string } }>({
+// 学员端入口。v7 暗色杂志风（与教练端统一品牌紫，见 2026-05-27 体检：两端 token 一致）。
+App<{ globalData: { apiBase: string } }>({
   globalData: {
-    token: wx.getStorageSync("pt_token") || null,
-    // 真机指向备案后的 HTTPS 域名；开发期在「开发者工具」勾「不校验合法域名」
-    apiBase: "https://api.example.com/api/v1",
+    // dev 指向本机后端；真机需备案 HTTPS 域名 + 开发者工具勾「不校验合法域名」
+    apiBase: "http://127.0.0.1:8000/api/v1",
   },
   onLaunch() {
-    // wx.login → code 换 JWT 的时机放在「加入教练 / 首次需要鉴权」时触发
+    if (!wx.getStorageSync("pt_stoken")) {
+      // 未登录：交由首页守卫跳登录（tabBar 页无法 redirect 到非 tab，故登录用 reLaunch）
+    }
   },
 })

@@ -1,0 +1,102 @@
+# Personal-Training — production single-host stack (腾讯云轻量 4C8G)
+# nginx(443/80) -> api(8000) -> db(postgres16) + redis(7)
+# usage: cp .env.prod.example .env.prod && edit, then `docker compose up -d`
+name: personal-training
+
+services:
+  api:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    image: personal-training-api:latest
+    restart: always
+    env_file:
+      - .env.prod
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    expose:
+      - "8000"          # internal only; nginx reverse-proxies to it
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  db:
+    image: postgres:16
+    restart: always
+    # POSTGRES_* are read from .env.prod (PG_DB / PG_USER / PG_PASSWORD).
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    image: nginx:1.27
+    restart: always
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/personal-training.conf:/etc/nginx/conf.d/default.conf:ro
+      # certbot live certs + ACME webroot challenge dir (shared with certbot runs)
+      - certbot-conf:/etc/letsencrypt:ro
+      - certbot-www:/var/www/certbot:ro
+    networks:
+      - app
+
+  # One-shot certbot helper. Not started by `up`; invoke explicitly:
+  #   docker compose run --rm certbot certonly --webroot -w /var/www/certbot \
+  #     -d api.example.com --email you@example.com --agree-tos --no-eff-email
+  # Then renew via:
+  #   docker compose run --rm certbot renew && docker compose exec nginx nginx -s reload
+  certbot:
+    image: certbot/certbot:latest
+    profiles: ["certbot"]   # excluded from default `up`; run on demand
+    volumes:
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    entrypoint: ""
+    command: ["certbot", "--help"]
+
+volumes:
+  pgdata:
+  redisdata:
+  certbot-conf:
+  certbot-www:
+
+networks:
+  app:
+    driver: bridge

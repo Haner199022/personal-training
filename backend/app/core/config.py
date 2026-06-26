@@ -1,6 +1,7 @@
-"""集中配置：pydantic-settings 从 .env 读，缺关键项 fail-fast。"""
+"""集中配置：pydantic-settings 从 .env 读，非 dev 环境对弱密钥 fail-fast。"""
 from functools import lru_cache
 
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -19,16 +20,23 @@ class Settings(BaseSettings):
 
     wx_app_id: str = ""
     wx_app_secret: str = ""
-
-    # 缺失则 push 服务 Tier1 加密会 fail-fast（见 services/push）
     webhook_encrypt_key: str = ""
 
     cos_region: str = "ap-shanghai"
     cos_bucket: str = ""
     cos_secret_id: str = ""
     cos_secret_key: str = ""
-
     sentry_dsn: str = ""
+
+    @model_validator(mode="after")
+    def _guard_non_dev(self) -> "Settings":
+        # dev 允许占位；任何非 dev 环境必须显式提供强密钥 + 非 sqlite，否则启动即失败
+        if self.app_env != "dev":
+            if self.jwt_secret in ("", "dev-only-change-me"):
+                raise ValueError("JWT_SECRET 必须在非 dev 环境设为强随机值（不能用默认占位）")
+            if self.database_url.startswith("sqlite"):
+                raise ValueError("SQLite 仅限 dev；非 dev 请设 postgresql+psycopg:// 的 DATABASE_URL")
+        return self
 
 
 @lru_cache

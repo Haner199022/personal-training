@@ -1,4 +1,39 @@
 <view class="container">
-  <view class="page-title">{{title}}</view>
-  <view class="placeholder">「我的教练」页占位，按 wireframes 实现。</view>
+  <!-- 头部：教练名 + 资质 chip -->
+  <view class="hero">
+    <view class="avatar">🏋️</view>
+    <view class="h1 name">{{name}}</view>
+    <view class="chip cert">认证私人教练</view>
+  </view>
+
+  <!-- 简介 -->
+  <view class="card">
+    <view class="micro">教练简介</view>
+    <view class="lede bio">{{bio}}</view>
+    <view class="tags">
+      <view wx:for="{{specialties}}" wx:key="*this" class="chip tag">{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 服务状态 -->
+  <view class="card">
+    <view class="micro">服务状态</view>
+    <block wx:if="{{serving}}">
+      <view class="status">
+        <text class="dot-green">●</text>
+        <text class="status-text">正在服务</text>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="status">
+        <text class="dot-yellow">●</text>
+        <text class="status-text">暂未开通服务</text>
+      </view>
+    </block>
+    <view wx:if="{{servingFor}}" class="caption serving-for">已服务 {{servingFor}}</view>
+  </view>
+
+  <!-- 进入服务群 -->
+  <button class="btn-primary enter" bindtap="enterGroup">💬 进入服务群</button>
+  <view class="caption foot">重要训练与打卡提醒会在群里通知</view>
 </view>

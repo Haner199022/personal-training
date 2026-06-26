@@ -1,0 +1,69 @@
+.field { margin-top: 24rpx; }
+.label { font-size: 26rpx; color: var(--c-mute); margin-bottom: 12rpx; }
+.req { color: var(--c-brand); margin-left: 4rpx; }
+.opt { font-size: 22rpx; color: var(--c-mute); margin-left: 8rpx; }
+.inp {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--c-elev2);
+  border: 1rpx solid var(--c-border);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  color: var(--c-text);
+  font-size: 30rpx;
+}
+.picker-val {
+  background: var(--c-elev2);
+  border: 1rpx solid var(--c-border);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  color: var(--c-text);
+  font-size: 30rpx;
+}
+
+.grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.half { width: 48%; }
+
+/* 体脂照 */
+.photo-row { display: flex; justify-content: space-between; margin-top: 24rpx; }
+.photo-btn {
+  width: 30%;
+  height: 200rpx;
+  background: var(--c-elev2);
+  border: 1rpx dashed var(--c-border);
+  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.plus { font-size: 56rpx; color: var(--c-brand); line-height: 1; }
+.ptag { font-size: 24rpx; color: var(--c-mute); margin-top: 12rpx; }
+.thumb { width: 100%; height: 100%; }
+
+.submit { width: 100%; }
+.busy { opacity: 0.6; }
+
+/* PIPL 弹层 */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: flex-end;
+  z-index: 100;
+}
+.sheet {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--c-elev);
+  border: 1rpx solid var(--c-border);
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 40rpx 32rpx calc(40rpx + env(safe-area-inset-bottom));
+}
+.points { margin: 16rpx 0; }
+.pt { font-size: 28rpx; line-height: 2; color: var(--c-text); }
+.sheet-btns { display: flex; gap: 24rpx; margin-top: 24rpx; }
+.sheet-btns .btn-ghost { flex: 1; }
+.sheet-btns .btn-primary { flex: 1; }

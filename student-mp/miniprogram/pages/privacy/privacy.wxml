@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="h1" style="margin-bottom:8rpx">隐私设置</view>
+  <view class="lede" style="margin-bottom:40rpx">你的敏感信息由你掌控，授权可随时撤回。</view>
+
+  <!-- 体脂照授权 -->
+  <view class="card">
+    <view class="micro">体脂照授权</view>
+
+    <view class="status" wx:if="{{consented}}">
+      <text class="dot-green">✅</text>
+      <text class="status-txt">已同意</text>
+    </view>
+    <view class="status" wx:else>
+      <text class="status-circle">○</text>
+      <text class="status-txt mute">未同意</text>
+    </view>
+
+    <view wx:if="{{consented && consentDate}}" class="caption meta">同意时间 · {{consentDate}}</view>
+
+    <view class="divider"></view>
+
+    <view class="row">
+      <text class="row-k">存储</text>
+      <text class="row-v">腾讯云 COS · 上海/广州，不出境</text>
+    </view>
+    <view class="row">
+      <text class="row-k">可见范围</text>
+      <text class="row-v">仅自己和教练可见</text>
+    </view>
+
+    <button
+      class="{{consented ? 'btn-ghost' : 'btn-ghost disabled'}} revoke-btn"
+      disabled="{{!consented}}"
+      bindtap="openConfirm">撤回体脂照授权</button>
+
+    <view class="caption hint">ⓘ 撤回后教练端立即不再展示你的体脂照</view>
+  </view>
+
+  <view class="caption foot">体脂照属敏感信息，存储于腾讯云上海/广州，不出境，可随时撤回。</view>
+</view>
+
+<!-- 撤回确认弹层 -->
+<view wx:if="{{showConfirm}}" class="mask" bindtap="closeConfirm">
+  <view class="sheet" catchtap="noop">
+    <view class="h2 sheet-title">撤回体脂照授权？</view>
+    <view class="sheet-points">
+      <view class="point"><text class="dot-red">•</text> 教练端将不再展示你的体脂照</view>
+      <view class="point"><text class="dot-red">•</text> 已上传的照片停止使用</view>
+      <view class="point caption">仅自己和教练可见；数据存储于腾讯云上海/广州，不出境。</view>
+    </view>
+    <view class="sheet-actions">
+      <button class="btn-ghost half" bindtap="closeConfirm">取消</button>
+      <button class="btn-primary half danger" loading="{{revoking}}" bindtap="confirmRevoke">确认撤回</button>
+    </view>
+  </view>
+</view>

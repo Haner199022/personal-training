@@ -1,9 +1,32 @@
-/* 学员端全局样式
- * 设计语言：
- *   1. 移动端 body 13-14px（不与教练端 web 16px 拉齐）
- *   2. 主色暖橙 #ff6b35 —— 能量感；数据色独立（青/绿/红）
- *   注：原机器的 v7 暗色杂志风实现已丢失，此为重建后的临时基线。
- */
-page { background: #f7f7f7; font-size: 28rpx; color: #1a1a1a; }
-.container { padding: 24rpx; }
-.btn-primary { background: #ff6b35; color: #fff; border-radius: 12rpx; }
+/* 学员端 v7 暗色杂志风（品牌紫，与教练端统一） */
+page {
+  --c-bg: #0a0a0c;
+  --c-elev: #141418;
+  --c-elev2: #1c1c22;
+  --c-text: #ececf1;
+  --c-mute: #8a8a96;
+  --c-border: #26262e;
+  --c-brand: #A855F7;
+  --c-brand-soft: rgba(168,85,247,0.16);
+  --c-green: #00E676;
+  --c-yellow: #FFB800;
+  --c-cyan: #00D4FF;
+  --c-red: #FF3B3B;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-size: 28rpx;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+}
+.container { padding: 32rpx; }
+.card { background: var(--c-elev); border: 1rpx solid var(--c-border); border-radius: 24rpx; padding: 32rpx; margin-bottom: 24rpx; }
+.h1 { font-size: 48rpx; font-weight: 800; letter-spacing: -1rpx; }
+.h2 { font-size: 36rpx; font-weight: 700; }
+.h3 { font-size: 30rpx; font-weight: 600; }
+.micro { font-size: 22rpx; letter-spacing: 4rpx; color: var(--c-mute); text-transform: uppercase; font-weight: 600; }
+.caption { font-size: 24rpx; color: var(--c-mute); }
+.lede { font-size: 30rpx; line-height: 1.6; color: var(--c-text); }
+.btn-primary { background: var(--c-brand); color: #fff; border-radius: 16rpx; box-shadow: 0 0 24rpx rgba(168,85,247,0.5); }
+.btn-ghost { background: var(--c-elev2); color: var(--c-text); border-radius: 16rpx; }
+.divider { height: 1rpx; background: var(--c-border); margin: 24rpx 0; }
+.chip { display: inline-block; font-size: 22rpx; padding: 4rpx 16rpx; border-radius: 12rpx; background: var(--c-elev2); color: var(--c-mute); }
+.dot-green { color: var(--c-green); } .dot-yellow { color: var(--c-yellow); } .dot-cyan { color: var(--c-cyan); } .dot-red { color: var(--c-red); }

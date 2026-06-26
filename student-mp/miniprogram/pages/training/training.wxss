@@ -1,2 +1,16 @@
-.page-title { font-size: 40rpx; font-weight: 600; margin-bottom: 16rpx; }
-.placeholder { color: #999; }
+.note { border-left: 4rpx solid var(--c-brand); }
+.ex-h { display: flex; justify-content: space-between; }
+.muscle { font-size: 24rpx; margin: 8rpx 0; }
+.ex-actions { display: flex; gap: 24rpx; align-items: center; margin-top: 16rpx; }
+.link { color: var(--c-cyan); font-size: 24rpx; }
+.done-btn { margin-left: auto; background: var(--c-brand-soft); color: var(--c-brand); padding: 8rpx 24rpx; border-radius: 12rpx; font-size: 24rpx; }
+.finish { margin-top: 8rpx; }
+.stars { font-size: 56rpx; color: var(--c-mute); margin-top: 8rpx; } .stars .on { color: var(--c-yellow); }
+.ta { background: var(--c-elev2); border-radius: 16rpx; padding: 20rpx; width: 100%; box-sizing: border-box; margin: 16rpx 0; height: 120rpx; }
+.mask { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: flex-end; }
+.sheet { background: var(--c-elev); width: 100%; border-radius: 32rpx 32rpx 0 0; padding: 40rpx; }
+.sheet-h { display: flex; justify-content: space-between; align-items: center; } .x { font-size: 48rpx; color: var(--c-mute); }
+.demo-box { height: 280rpx; background: var(--c-elev2); border-radius: 20rpx; display: flex; align-items: center; justify-content: center; color: var(--c-mute); margin-top: 24rpx; }
+.anat { display: flex; gap: 20rpx; } .m { flex: 1; height: 140rpx; border-radius: 16rpx; display: flex; align-items: center; justify-content: center; font-size: 24rpx; }
+.m.pri { background: var(--c-brand-soft); color: var(--c-brand); } .m.sec { background: var(--c-elev2); color: var(--c-mute); }
+.dot { display: inline-block; width: 16rpx; height: 16rpx; border-radius: 50%; } .dot.pri { background: var(--c-brand); }

@@ -1,0 +1,37 @@
+.status { display: flex; align-items: center; gap: 12rpx; margin-top: 20rpx; }
+.status-txt { font-size: 34rpx; font-weight: 700; }
+.status-txt.mute { color: var(--c-mute); }
+.status-circle { font-size: 32rpx; color: var(--c-mute); }
+.meta { margin-top: 12rpx; }
+
+.row { display: flex; justify-content: space-between; align-items: flex-start; gap: 24rpx; margin-bottom: 16rpx; }
+.row-k { font-size: 26rpx; color: var(--c-mute); flex-shrink: 0; }
+.row-v { font-size: 26rpx; color: var(--c-text); text-align: right; line-height: 1.5; }
+
+.revoke-btn { width: 100%; margin-top: 32rpx; }
+.revoke-btn.disabled { opacity: 0.4; box-shadow: none; }
+.hint { margin-top: 16rpx; line-height: 1.5; }
+.foot { margin-top: 8rpx; line-height: 1.6; }
+
+/* 确认弹层 */
+.mask {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: flex-end;
+  z-index: 100;
+}
+.sheet {
+  width: 100%;
+  background: var(--c-elev);
+  border-top-left-radius: 28rpx; border-top-right-radius: 28rpx;
+  border-top: 1rpx solid var(--c-border);
+  padding: 40rpx 32rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.sheet-title { margin-bottom: 24rpx; }
+.sheet-points { margin-bottom: 32rpx; }
+.point { font-size: 28rpx; line-height: 1.7; color: var(--c-text); }
+.point.caption { margin-top: 12rpx; line-height: 1.6; }
+.sheet-actions { display: flex; gap: 24rpx; }
+.half { flex: 1; }
+.danger { box-shadow: 0 0 24rpx rgba(255,59,59,0.35); background: var(--c-red); }

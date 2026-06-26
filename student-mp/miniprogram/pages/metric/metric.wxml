@@ -1,0 +1,101 @@
+<view class="container">
+  <view class="h1" style="margin-bottom:8rpx">录入体脂数据</view>
+  <view class="lede" style="margin-bottom:32rpx">记录当前数据，查看体型变化趋势。</view>
+
+  <!-- 基础数据 -->
+  <view class="card">
+    <view class="micro">基础数据</view>
+
+    <view class="field">
+      <view class="label">测量日期</view>
+      <picker mode="date" value="{{metricDate}}" bindchange="onDateChange">
+        <view class="picker-val">{{metricDate}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <view class="label">体重（kg）<text class="req">*</text></view>
+      <input class="inp" type="digit" placeholder="如 68.5" value="{{weight}}" bindinput="onWeight" />
+    </view>
+
+    <view class="field">
+      <view class="label">体脂率（%）<text class="req">*</text></view>
+      <input class="inp" type="digit" placeholder="如 18.0" value="{{bodyFatRate}}" bindinput="onBodyFat" />
+    </view>
+
+    <view class="field">
+      <view class="label">肌肉量（kg）<text class="opt">选填</text></view>
+      <input class="inp" type="digit" placeholder="如 32.0" value="{{muscleMass}}" bindinput="onMuscle" />
+    </view>
+  </view>
+
+  <!-- 围度 -->
+  <view class="card">
+    <view class="micro">围度（cm · 选填）</view>
+    <view class="grid">
+      <view class="field half">
+        <view class="label">腰围</view>
+        <input class="inp" type="digit" placeholder="cm" value="{{waist}}" bindinput="onWaist" />
+      </view>
+      <view class="field half">
+        <view class="label">胸围</view>
+        <input class="inp" type="digit" placeholder="cm" value="{{chest}}" bindinput="onChest" />
+      </view>
+      <view class="field half">
+        <view class="label">臂围</view>
+        <input class="inp" type="digit" placeholder="cm" value="{{arm}}" bindinput="onArm" />
+      </view>
+      <view class="field half">
+        <view class="label">大腿围</view>
+        <input class="inp" type="digit" placeholder="cm" value="{{thigh}}" bindinput="onThigh" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="card">
+    <view class="micro">备注（选填）</view>
+    <input class="inp" placeholder="本次测量的状态、时间点等" value="{{notes}}" bindinput="onNotes" />
+  </view>
+
+  <!-- 体脂照 -->
+  <view class="card">
+    <view class="h3">📷 体脂照（建议每周一组）</view>
+    <view class="photo-row">
+      <view class="photo-btn" data-pose="front" bindtap="tapUpload">
+        <block wx:if="{{photos.front}}"><image class="thumb" src="{{photos.front}}" mode="aspectFill" /></block>
+        <block wx:else><view class="plus">+</view><view class="ptag">正面</view></block>
+      </view>
+      <view class="photo-btn" data-pose="side" bindtap="tapUpload">
+        <block wx:if="{{photos.side}}"><image class="thumb" src="{{photos.side}}" mode="aspectFill" /></block>
+        <block wx:else><view class="plus">+</view><view class="ptag">侧面</view></block>
+      </view>
+      <view class="photo-btn" data-pose="back" bindtap="tapUpload">
+        <block wx:if="{{photos.back}}"><image class="thumb" src="{{photos.back}}" mode="aspectFill" /></block>
+        <block wx:else><view class="plus">+</view><view class="ptag">背面</view></block>
+      </view>
+    </view>
+    <view class="caption" style="margin-top:16rpx">☑ 仅自己和教练可见</view>
+  </view>
+
+  <button class="btn-primary submit {{submitting ? 'busy' : ''}}" bindtap="submit">{{submitting ? '上传中…' : '提交'}}</button>
+  <view style="height:48rpx"></view>
+
+  <!-- PIPL 同意弹层 -->
+  <view wx:if="{{showConsent}}" class="overlay">
+    <view class="sheet">
+      <view class="h2" style="margin-bottom:16rpx">上传体脂照前的额外同意</view>
+      <view class="points">
+        <view class="pt"><text class="dot-green">●</text> 体脂照仅本人和你的教练可见</view>
+        <view class="pt"><text class="dot-green">●</text> 数据存储于腾讯云上海/广州，不出境</view>
+        <view class="pt"><text class="dot-green">●</text> 可随时在「我 → 隐私设置」撤回</view>
+      </view>
+      <view class="divider"></view>
+      <view class="caption">用途：体型变化趋势分析。</view>
+      <view class="sheet-btns">
+        <button class="btn-ghost" bindtap="closeConsent">我再想想</button>
+        <button class="btn-primary" bindtap="agreeConsent">同意并上传</button>
+      </view>
+    </view>
+  </view>
+</view>

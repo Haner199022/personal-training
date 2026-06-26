@@ -1,4 +1,15 @@
 <view class="container">
-  <view class="page-title">{{title}}</view>
-  <view class="placeholder">「加入教练」页占位，按 wireframes 实现。</view>
+  <view class="h1" style="margin-bottom:8rpx">加入教练</view>
+  <view class="lede" style="margin-bottom:48rpx">输入教练给你的邀请码，或扫描二维码。</view>
+  <view class="card">
+    <view class="micro">方式 1 · 输入邀请码</view>
+    <input class="code-input" placeholder="XK3F-92A1" value="{{code}}" bindinput="onInput" maxlength="9" />
+    <button class="btn-primary" style="width:100%;margin-top:24rpx" bindtap="submit">加入</button>
+  </view>
+  <view class="caption" style="text-align:center;margin:24rpx 0">─────── 或 ───────</view>
+  <view class="card scan">
+    <view class="micro">方式 2 · 扫描二维码</view>
+    <view class="cam">📷</view>
+    <view class="caption">点击调起摄像头扫教练二维码（真机可用）</view>
+  </view>
 </view>

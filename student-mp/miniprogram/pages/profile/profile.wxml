@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="h2 title">我的</view>
+
+  <view class="card user">
+    <view class="avatar">👤</view>
+    <view class="u-name">{{name}}</view>
+  </view>
+
+  <view class="micro menu-label">账户与服务</view>
+
+  <view class="card row" bindtap="toCoach">
+    <view class="row-l">🧑‍🏫 我的教练</view>
+    <view class="row-r">
+      <text class="r-val">{{coachName || "未绑定"}}</text>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view class="card row" bindtap="toGroup">
+    <view class="row-l">💬 服务群</view>
+    <view class="row-r">
+      <text class="r-val {{inGroup ? 'ok' : 'warn'}}">{{inGroup ? "✅ 已加入" : "⚠ 去加群"}}</text>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view class="micro menu-label">隐私与设置</view>
+
+  <view class="card row" bindtap="toPrivacy">
+    <view class="row-l">🔒 隐私设置</view>
+    <view class="row-r"><text class="arrow">›</text></view>
+  </view>
+
+  <view class="card row" bindtap="toSettings">
+    <view class="row-l">⚙️ 设置</view>
+    <view class="row-r"><text class="arrow">›</text></view>
+  </view>
+
+  <view class="card row" bindtap="toAbout">
+    <view class="row-l">ℹ️ 关于</view>
+    <view class="row-r"><text class="arrow">›</text></view>
+  </view>
+
+  <view class="caption foot">练程 / 练+ · 私教助理</view>
+</view>

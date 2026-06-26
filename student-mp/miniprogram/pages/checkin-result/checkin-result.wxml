@@ -1,4 +1,34 @@
 <view class="container">
-  <view class="page-title">{{title}}</view>
-  <view class="placeholder">「打卡完成」页占位，按 wireframes 实现。</view>
+  <!-- 完成头 -->
+  <view class="done-head">
+    <view class="done-emoji">🎉</view>
+    <view class="h1 done-title">完成「{{title}}」</view>
+    <view class="caption done-sub">这次打卡已记录，干得漂亮。</view>
+  </view>
+
+  <!-- 教练点评 -->
+  <view class="card">
+    <view class="micro">教练点评</view>
+    <block wx:if="{{hasComment}}">
+      <view class="lede comment-body">{{comment}}</view>
+      <view class="caption sign">— {{coachName}}</view>
+    </block>
+    <block wx:else>
+      <view class="lede pending-title">教练还没点评</view>
+      <view class="caption">教练后台已收到提醒，通常当天回复。</view>
+    </block>
+  </view>
+
+  <!-- 订阅提示（低视觉权重） -->
+  <view wx:if="{{!subDone}}" class="card sub-card">
+    <view class="h3">想收到下次打卡提醒？</view>
+    <view class="caption">微信订阅消息 · 一次性</view>
+    <view class="sub-actions">
+      <button class="btn-ghost sub-btn" bindtap="declineSub" type="default">不用了</button>
+      <button class="btn-ghost sub-btn" bindtap="acceptSub" type="default">订阅</button>
+    </view>
+  </view>
+
+  <!-- 返回主页 -->
+  <button class="btn-primary home-btn" bindtap="goHome" type="default">返回主页</button>
 </view>

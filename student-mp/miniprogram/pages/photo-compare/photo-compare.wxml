@@ -1,0 +1,86 @@
+<view class="container">
+  <view class="micro" style="margin-bottom:8rpx">体脂照对比</view>
+  <view class="caption" style="margin-bottom:24rpx">同一姿态、不同日期的趋势对照工具</view>
+
+  <!-- 姿态切换 -->
+  <view class="poses">
+    <view
+      wx:for="{{poseList}}"
+      wx:key="key"
+      class="chip pose-chip {{pose===item.key ? 'pose-on' : ''}}"
+      bindtap="switchPose"
+      data-pose="{{item.key}}"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- 有照片：对比网格 -->
+  <block wx:if="{{photos.length>0}}">
+    <view class="grid">
+      <!-- 左侧 -->
+      <view class="col card">
+        <view class="frame">
+          <image wx:if="{{leftPhoto && leftPhoto.url}}" class="shot" src="{{leftPhoto.url}}" mode="aspectFill" />
+          <view wx:else class="ph">暂无照片</view>
+        </view>
+        <view class="date-label">{{leftPhoto ? leftPhoto.date : '—'}}</view>
+        <picker mode="selector" range="{{dateLabels}}" value="{{leftIndex}}" bindchange="onLeftPick">
+          <view class="picker">📅 {{leftPhoto ? leftPhoto.date : '选择日期'}} ▾</view>
+        </picker>
+      </view>
+
+      <!-- 右侧 -->
+      <view class="col card">
+        <view class="frame">
+          <image wx:if="{{rightPhoto && rightPhoto.url}}" class="shot" src="{{rightPhoto.url}}" mode="aspectFill" />
+          <view wx:else class="ph">暂无照片</view>
+        </view>
+        <view class="date-label">{{rightPhoto ? rightPhoto.date : '—'}}</view>
+        <picker mode="selector" range="{{dateLabels}}" value="{{rightIndex}}" bindchange="onRightPick">
+          <view class="picker">📅 {{rightPhoto ? rightPhoto.date : '选择日期'}} ▾</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- ◀▶ 切换 -->
+    <view class="steppers">
+      <view class="step-row">
+        <view class="caption">左侧</view>
+        <view class="arrows">
+          <view class="arrow" bindtap="leftPrev">◀</view>
+          <view class="arrow" bindtap="leftNext">▶</view>
+        </view>
+      </view>
+      <view class="step-row">
+        <view class="caption">右侧</view>
+        <view class="arrows">
+          <view class="arrow" bindtap="rightPrev">◀</view>
+          <view class="arrow" bindtap="rightNext">▶</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部汇总：同期体脂趋势 -->
+    <view wx:if="{{showSummary}}" class="card summary">
+      <view class="micro">同期体脂趋势</view>
+      <view class="sum-line">
+        <text class="sum-v">{{summaryFrom}}%</text>
+        <text class="sum-arrow">→</text>
+        <text class="sum-v sum-to">{{summaryTo}}%</text>
+      </view>
+      <view class="caption">仅作个人趋势参考</view>
+    </view>
+
+    <view class="caption privacy">🔒 仅自己和教练可见 · 腾讯云上海/广州存储不出境 · 可随时撤回</view>
+  </block>
+
+  <!-- 空态 -->
+  <block wx:else>
+    <view class="card empty">
+      <view class="empty-emoji">🖼️</view>
+      <view class="h3">还没有体脂照</view>
+      <view class="caption" style="margin:12rpx 0 24rpx">去「录入体脂数据」上传第一组，之后就能在这里对比趋势。</view>
+      <button class="btn-ghost" bindtap="toMetric">去录入体脂数据</button>
+    </view>
+    <view class="caption privacy">🔒 仅自己和教练可见 · 腾讯云上海/广州存储不出境 · 可随时撤回</view>
+  </block>
+</view>

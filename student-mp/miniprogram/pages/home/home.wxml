@@ -1,4 +1,32 @@
 <view class="container">
-  <view class="page-title">{{title}}</view>
-  <view class="placeholder">「今日训练」页占位，按 wireframes 实现。</view>
+  <view class="top">
+    <view class="h2">👋 {{name}}，今天加油！</view>
+    <view class="bell" bindtap="toInbox">🔔<text wx:if="{{unread>0}}" class="badge">{{unread}}</text></view>
+  </view>
+
+  <view class="card today">
+    <view class="micro">今日训练</view>
+    <block wx:if="{{today && !today.rest}}">
+      <view class="h1 tt">{{today.session.title}}</view>
+      <view class="caption">{{today.plan_title}} · {{today.exercise_count}} 个动作 · 预计 60 分钟</view>
+      <button class="btn-primary start" bindtap="startTraining">▶ 开始训练</button>
+    </block>
+    <block wx:else>
+      <view class="h2 tt">今日休息 🧘</view>
+      <view class="caption">做点拉伸，明天继续。</view>
+    </block>
+  </view>
+
+  <view class="micro" style="margin:8rpx 0 16rpx">最近教练点评</view>
+  <view wx:for="{{recent}}" wx:key="id" class="card rc">
+    <view class="rc-h">💬 {{item.date}} · {{item.plan_title}}</view>
+    <view class="caption">{{item.commented ? "教练已点评，点消息查看" : "等待教练点评…"}}</view>
+  </view>
+  <view wx:if="{{recent.length===0}}" class="caption">还没有打卡记录，开始今天的训练吧。</view>
+
+  <view class="card join-tip">
+    <view class="h3">⚠ 还没加入教练服务群</view>
+    <view class="caption">重要打卡提醒在群里收到</view>
+    <button class="btn-ghost small">扫码加群</button>
+  </view>
 </view>

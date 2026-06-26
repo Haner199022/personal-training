@@ -1,4 +1,42 @@
 <view class="container">
-  <view class="page-title">{{title}}</view>
-  <view class="placeholder">「训练详情」页占位，按 wireframes 实现。</view>
+  <view class="h1">{{title}}</view>
+  <view class="card note"><view class="caption">教练备注</view><view class="lede">{{note}}</view></view>
+
+  <view wx:for="{{exercises}}" wx:key="name" class="card ex">
+    <view class="ex-h">
+      <view class="h3">{{index+1}}. {{item.name}} <text wx:if="{{item.done}}" class="dot-green"> ✅</text></view>
+    </view>
+    <view class="caption">教练规定：{{item.sets}}×{{item.reps}} @{{item.weight}}</view>
+    <view class="muscle dot-cyan">💪 {{item.primary}}</view>
+    <view class="ex-actions">
+      <view class="link" data-i="{{index}}" bindtap="showDemo">▶ 看演示</view>
+      <view class="link" data-i="{{index}}" bindtap="showDemo">💪 练哪里</view>
+      <view class="done-btn" data-i="{{index}}" bindtap="toggleDone">{{item.done ? "↺ 撤销" : "✓ 完成这组"}}</view>
+    </view>
+  </view>
+
+  <button wx:if="{{!finishing}}" class="btn-primary" style="width:100%" bindtap="finish">完成训练</button>
+
+  <view wx:if="{{finishing}}" class="card finish">
+    <view class="h2">训练完成 🎉</view>
+    <view class="micro" style="margin-top:24rpx">感受</view>
+    <view class="stars">
+      <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this" data-v="{{item}}" bindtap="setFeel" class="{{item<=feeling ? 'on':''}}">★</text>
+    </view>
+    <view class="micro" style="margin-top:16rpx">RPE 主观吃力：{{rpe}}/10</view>
+    <slider min="1" max="10" value="{{rpe}}" bindchange="onRpe" activeColor="#A855F7" block-size="20" />
+    <textarea class="ta" placeholder="留言：今天感觉如何…" value="{{comment}}" bindinput="onComment" />
+    <view class="caption">打卡照（可选）：📷 拍照</view>
+    <button class="btn-primary" style="width:100%;margin-top:24rpx" bindtap="submit">提交打卡</button>
+  </view>
+</view>
+
+<view wx:if="{{demoOpen}}" class="mask" bindtap="closeDemo">
+  <view class="sheet" catchtap="">
+    <view class="sheet-h"><text class="h3">{{demo.name}}</text><text class="x" bindtap="closeDemo">×</text></view>
+    <view class="demo-box">▶ 动作演示（E4 采购素材）</view>
+    <view class="micro" style="margin:24rpx 0 12rpx">练哪里（E1 解剖高亮）</view>
+    <view class="anat"><view class="m pri">主练</view><view class="m sec">辅助</view></view>
+    <view style="margin-top:20rpx"><text class="dot pri"></text> 主练：{{demo.primary}}</view>
+  </view>
 </view>

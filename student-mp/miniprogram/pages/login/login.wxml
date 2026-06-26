@@ -1,0 +1,11 @@
+<view class="login">
+  <view class="brand">
+    <view class="mark">PT</view>
+    <view class="title">Personal-Training</view>
+    <view class="micro">学员端 · DARK MAGAZINE</view>
+  </view>
+  <view class="lede sub">训练 · 打卡 · 体脂，和你的教练在一起。</view>
+  <button class="btn-primary go" loading="{{loading}}" bindtap="onLogin">🟢 微信一键登录</button>
+  <view class="caption agree">登录即同意《用户协议》与《隐私政策》</view>
+  <view class="caption agree">（体脂照属敏感信息，上传时另需单独同意）</view>
+</view>
